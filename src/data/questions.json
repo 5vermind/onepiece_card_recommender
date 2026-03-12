@@ -1,0 +1,57 @@
+[
+  {
+    "id": "q1-experience",
+    "text": "원피스 카드 게임 경험이 어느 정도인가요?",
+    "description": "덱의 난이도를 결정하는 데 참고해요",
+    "options": [
+      { "id": "q1-beginner", "text": "처음이에요!", "icon": "🌱", "weights": { "difficulties": { "easy": 3, "medium": 1 }, "tiers": { "A": 1, "B": 1 } } },
+      { "id": "q1-intermediate", "text": "몇 번 해봤어요", "icon": "📚", "weights": { "difficulties": { "easy": 1, "medium": 3, "hard": 1 } } },
+      { "id": "q1-experienced", "text": "꽤 많이 했어요!", "icon": "🔥", "weights": { "difficulties": { "medium": 1, "hard": 3 }, "tiers": { "S": 1 } } }
+    ]
+  },
+  {
+    "id": "q2-playstyle",
+    "text": "어떤 스타일로 게임하고 싶으세요?",
+    "description": "가장 중요한 질문이에요! 덱의 핵심 전략을 결정합니다",
+    "options": [
+      { "id": "q2-aggro", "text": "빠르게 공격해서 이기고 싶어요!", "icon": "⚔️", "weights": { "playstyles": { "aggro": 3 } } },
+      { "id": "q2-midrange", "text": "균형 잡힌 전략으로 유연하게!", "icon": "⚖️", "weights": { "playstyles": { "midrange": 3 } } },
+      { "id": "q2-control", "text": "방어하면서 후반에 역전!", "icon": "🛡️", "weights": { "playstyles": { "control": 3 } } },
+      { "id": "q2-combo", "text": "독특한 콤보로 한 방!", "icon": "🎯", "weights": { "playstyles": { "combo": 3 } } }
+    ]
+  },
+  {
+    "id": "q3-color",
+    "text": "마음에 드는 색상을 골라주세요!",
+    "description": "원피스 카드 게임의 6가지 색상은 각각 다른 전략을 대표해요",
+    "options": [
+      { "id": "q3-red", "text": "레드 — 정열적인 공격", "icon": "🔴", "weights": { "colors": { "Red": 3 } } },
+      { "id": "q3-green", "text": "그린 — 성장과 버프", "icon": "🟢", "weights": { "colors": { "Green": 3 } } },
+      { "id": "q3-blue", "text": "블루 — 전략적 컨트롤", "icon": "🔵", "weights": { "colors": { "Blue": 3 } } },
+      { "id": "q3-purple", "text": "퍼플 — 트리키한 플레이", "icon": "🟣", "weights": { "colors": { "Purple": 3 } } },
+      { "id": "q3-black", "text": "블랙 — 상대 방해와 제거", "icon": "⚫", "weights": { "colors": { "Black": 3 } } },
+      { "id": "q3-yellow", "text": "옐로 — 트리거와 방어", "icon": "🟡", "weights": { "colors": { "Yellow": 3 } } },
+      { "id": "q3-any", "text": "상관없어요!", "icon": "🌈", "weights": { "colors": { "Red": 1, "Green": 1, "Blue": 1, "Purple": 1, "Black": 1, "Yellow": 1 } } }
+    ]
+  },
+  {
+    "id": "q4-goal",
+    "text": "어떤 목적으로 덱을 찾고 있나요?",
+    "description": "대회용 덱과 캐주얼 덱은 추천 기준이 달라요",
+    "options": [
+      { "id": "q4-competitive", "text": "대회에서 이기고 싶어요!", "icon": "🏆", "weights": { "tiers": { "S": 3, "A": 2 } } },
+      { "id": "q4-casual", "text": "친구들과 재미있게 즐기고 싶어요!", "icon": "🎉", "weights": { "tiers": { "A": 1, "B": 2, "C": 2 } } },
+      { "id": "q4-both", "text": "이기면서도 재미있게!", "icon": "💪", "weights": { "tiers": { "S": 2, "A": 2, "B": 1 } } }
+    ]
+  },
+  {
+    "id": "q5-complexity",
+    "text": "덱의 복잡도는 어느 정도가 좋으세요?",
+    "description": "복잡한 덱일수록 마스터하면 강하지만, 배우는 데 시간이 걸려요",
+    "options": [
+      { "id": "q5-simple", "text": "심플하고 직관적인 덱이 좋아요", "icon": "👌", "weights": { "difficulties": { "easy": 3, "medium": 1 } } },
+      { "id": "q5-moderate", "text": "적당히 생각할 거리가 있으면 좋겠어요", "icon": "🧩", "weights": { "difficulties": { "medium": 3 } } },
+      { "id": "q5-complex", "text": "복잡해도 괜찮아요, 강하면 돼요!", "icon": "🧠", "weights": { "difficulties": { "medium": 1, "hard": 3 } } }
+    ]
+  }
+]

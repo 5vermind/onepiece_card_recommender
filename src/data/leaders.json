@@ -1,0 +1,164 @@
+[
+  {
+    "id": "OP11-040",
+    "name": "Monkey D. Luffy",
+    "nameKo": "몽키 D. 루피",
+    "colors": ["Blue", "Purple"],
+    "life": 3,
+    "power": 6000,
+    "set": "OP-11"
+  },
+  {
+    "id": "EB02-010",
+    "name": "Monkey D. Luffy",
+    "nameKo": "몽키 D. 루피",
+    "colors": ["Green", "Purple"],
+    "life": 4,
+    "power": 5000,
+    "set": "EB-02"
+  },
+  {
+    "id": "OP05-060",
+    "name": "Monkey D. Luffy",
+    "nameKo": "몽키 D. 루피",
+    "colors": ["Purple"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-05"
+  },
+  {
+    "id": "OP05-002",
+    "name": "Belo Betty",
+    "nameKo": "벨로 베티",
+    "colors": ["Red", "Yellow"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-05"
+  },
+  {
+    "id": "OP01-001",
+    "name": "Roronoa Zoro",
+    "nameKo": "로로노아 조로",
+    "colors": ["Red"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-01"
+  },
+  {
+    "id": "OP09-081",
+    "name": "Marshall D. Teach",
+    "nameKo": "마샬 D. 티치",
+    "colors": ["Black"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-09"
+  },
+  {
+    "id": "OP07-079",
+    "name": "Rob Lucci",
+    "nameKo": "롭 루치",
+    "colors": ["Black"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-07"
+  },
+  {
+    "id": "OP07-019",
+    "name": "Jewelry Bonney",
+    "nameKo": "쥬얼리 보니",
+    "colors": ["Green"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-07"
+  },
+  {
+    "id": "OP10-001",
+    "name": "Smoker",
+    "nameKo": "스모커",
+    "colors": ["Red", "Green"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-10"
+  },
+  {
+    "id": "OP06-022",
+    "name": "Yamato",
+    "nameKo": "야마토",
+    "colors": ["Green", "Yellow"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-06"
+  },
+  {
+    "id": "OP09-042",
+    "name": "Buggy",
+    "nameKo": "버기",
+    "colors": ["Blue"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-09"
+  },
+  {
+    "id": "OP09-001",
+    "name": "Shanks",
+    "nameKo": "샹크스",
+    "colors": ["Red"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-09"
+  },
+  {
+    "id": "OP10-022",
+    "name": "Trafalgar Law",
+    "nameKo": "트라팔가 로",
+    "colors": ["Green", "Yellow"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-10"
+  },
+  {
+    "id": "OP11-041",
+    "name": "Nami",
+    "nameKo": "나미",
+    "colors": ["Blue", "Yellow"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-11"
+  },
+  {
+    "id": "OP09-061",
+    "name": "Monkey D. Luffy",
+    "nameKo": "몽키 D. 루피",
+    "colors": ["Purple", "Black"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-09"
+  },
+  {
+    "id": "OP11-062",
+    "name": "Katakuri",
+    "nameKo": "카타쿠리",
+    "colors": ["Purple"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-11"
+  },
+  {
+    "id": "OP08-002",
+    "name": "Marco",
+    "nameKo": "마르코",
+    "colors": ["Red", "Blue"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-08"
+  },
+  {
+    "id": "OP06-042",
+    "name": "Vinsmoke Reiju",
+    "nameKo": "빈스모크 레이쥬",
+    "colors": ["Blue", "Purple"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-06"
+  }
+]
