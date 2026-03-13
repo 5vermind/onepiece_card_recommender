@@ -1,124 +1,63 @@
-"use client";
-
-import { Suspense, useState, useMemo } from "react";
-import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import type { Metadata } from "next";
 import { recommendDecks } from "@/lib/recommend";
-import { DeckCard } from "@/components/DeckCard";
-import { ShareButton } from "@/components/ShareButton";
-import { Button } from "@/components/ui/Button";
+import { ResultContent } from "./ResultContent";
 
-function ResultContent() {
-  const searchParams = useSearchParams();
-  const [showAll, setShowAll] = useState(false);
+type Props = {
+  searchParams: Promise<Record<string, string | string[] | undefined>>;
+};
 
-  const { results, error } = useMemo(() => {
-    const param = searchParams.get("a");
-    if (!param) {
-      return { results: null, error: "답변 데이터가 없습니다." };
-    }
+export async function generateMetadata({ searchParams }: Props): Promise<Metadata> {
+  const params = await searchParams;
+  const param = typeof params.a === "string" ? params.a : undefined;
 
-    try {
-      const decoded = JSON.parse(decodeURIComponent(param)) as Record<string, string>;
-      return { results: recommendDecks(decoded), error: null };
-    } catch {
-      return { results: null, error: "답변 데이터를 읽을 수 없습니다." };
-    }
-  }, [searchParams]);
-
-  if (error || !results) {
-    return (
-      <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
-        <div className="mb-4 text-5xl">😢</div>
-        <h1 className="text-xl font-bold text-gray-900">{error ?? "문제가 발생했어요"}</h1>
-        <p className="mt-2 text-gray-500">퀴즈를 다시 진행해 주세요.</p>
-        <Link
-          href="/quiz"
-          className="mt-6 inline-flex h-11 items-center justify-center rounded-lg bg-op-red px-6 font-semibold text-white transition-all hover:brightness-110"
-        >
-          퀴즈 다시 하기
-        </Link>
-      </div>
-    );
+  if (!param) {
+    return {
+      title: "덱 추천 결과 | 원피스 카드 게임 덱 추천",
+    };
   }
 
-  const top3 = results.slice(0, 3);
-  const rest = results.slice(3);
+  let title = "나의 덱 추천 결과 | 원피스 카드 게임 덱 추천";
+  let description = "퀴즈로 찾은 나만의 추천 덱! 당신에게 맞는 덱은 무엇일까요?";
 
-  const shareText = useMemo(() => {
-    const deckNames = top3.map((r, i) => `${i + 1}. ${r.deck.nameKo}`).join("\n");
-    return `🏴‍☠️ 내 원피스 카드 게임 추천 덱\n${deckNames}`;
-  }, [top3]);
+  try {
+    const decoded = JSON.parse(decodeURIComponent(param)) as Record<string, string>;
+    const results = recommendDecks(decoded);
+    const top3 = results.slice(0, 3);
+    const names = top3.map((r) => r.deck.nameKo).join(", ");
+    title = `추천 덱: ${names} | 원피스 카드 게임`;
+    description = `나의 원피스 카드 게임 추천 덱: ${names}. 퀴즈를 풀고 나에게 맞는 덱을 찾아보세요!`;
+  } catch {
+    /* empty — use defaults above */
+  }
 
-  return (
-    <div className="mx-auto max-w-3xl px-4 py-8">
-      {/* Header */}
-      <div className="mb-8 text-center">
-        <div className="mb-2 text-4xl">🏴‍☠️</div>
-        <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">당신에게 추천하는 덱</h1>
-        <p className="mt-2 text-gray-500">퀴즈 결과를 바탕으로 가장 적합한 덱을 찾았어요!</p>
-      </div>
+  const ogImageUrl = `/api/og?a=${param}`;
 
-      {/* Top 3 Recommendations */}
-      <div className="space-y-4">
-        {top3.map((recommendation, index) => (
-          <DeckCard key={recommendation.deck.id} recommendation={recommendation} rank={index + 1} />
-        ))}
-      </div>
-
-      {/* Full Ranking Toggle */}
-      {rest.length > 0 && (
-        <div className="mt-8">
-          <button
-            type="button"
-            onClick={() => setShowAll((prev) => !prev)}
-            className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-center text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
-          >
-            {showAll ? "접기 ▲" : `전체 순위 보기 (${results.length}개 덱) ▼`}
-          </button>
-
-          {showAll && (
-            <div className="mt-4 space-y-3">
-              {rest.map((recommendation, index) => (
-                <DeckCard
-                  key={recommendation.deck.id}
-                  recommendation={recommendation}
-                  rank={index + 4}
-                />
-              ))}
-            </div>
-          )}
-        </div>
-      )}
-
-      {/* Action Buttons */}
-      <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-        <ShareButton shareText={shareText} />
-        <Link href="/quiz">
-          <Button variant="primary" size="lg">
-            다시 하기 🔄
-          </Button>
-        </Link>
-        <Link href="/">
-          <Button variant="ghost" size="lg">
-            처음으로
-          </Button>
-        </Link>
-      </div>
-    </div>
-  );
+  return {
+    title,
+    description,
+    openGraph: {
+      title: `🏴‍☠️ ${title}`,
+      description,
+      locale: "ko_KR",
+      type: "website",
+      images: [
+        {
+          url: ogImageUrl,
+          width: 1200,
+          height: 630,
+          alt: "원피스 카드 게임 덱 추천 결과",
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title,
+      description,
+      images: [ogImageUrl],
+    },
+  };
 }
 
 export default function ResultPage() {
-  return (
-    <Suspense
-      fallback={
-        <div className="flex min-h-[60vh] items-center justify-center">
-          <p className="text-gray-500">결과를 불러오는 중...</p>
-        </div>
-      }
-    >
-      <ResultContent />
-    </Suspense>
-  );
+  return <ResultContent />;
 }
