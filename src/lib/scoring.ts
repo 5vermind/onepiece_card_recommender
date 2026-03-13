@@ -12,7 +12,7 @@ import {
 const CATEGORY_MULTIPLIERS = {
   color: 1.0,
   playstyle: 1.5,
-  tier: 1.0,
+  tier: 1.3,
   difficulty: 0.8,
   budget: 0.6,
 } as const;
@@ -79,12 +79,12 @@ export function calculateDeckScore(
   weights: AggregatedWeights,
   answers: Record<string, string>,
 ): number {
-  const colorScore = deck.colors.reduce((sum, color) => sum + (weights.colors[color] ?? 0), 0);
+  const colorScore =
+    deck.colors.reduce((sum, color) => sum + (weights.colors[color] ?? 0), 0) / deck.colors.length;
 
-  const playstyleScore = deck.playstyle.reduce(
-    (sum, style) => sum + (weights.playstyles[style] ?? 0),
-    0,
-  );
+  const playstyleScore =
+    deck.playstyle.reduce((sum, style) => sum + (weights.playstyles[style] ?? 0), 0) /
+    deck.playstyle.length;
 
   const tierScore = weights.tiers[deck.tier] ?? 0;
   const difficultyScore = weights.difficulties[deck.difficulty] ?? 0;

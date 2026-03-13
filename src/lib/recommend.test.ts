@@ -19,7 +19,7 @@ function makeControlExperiencedAnswers(): Record<string, string> {
     "q1-experience": "q1-experienced",
     "q2-playstyle": "q2-control",
     "q3-color": "q3-black",
-    "q4-meta": "q4-top",
+    "q4-meta": "q4-counter",
     "q5-goal": "q5-competitive",
     "q6-budget": "q6-high",
     "q7-character": "q7-villain",

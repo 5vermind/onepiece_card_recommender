@@ -243,7 +243,7 @@ describe("calculateDeckScore", () => {
     expect(score).toBe(0);
   });
 
-  it("should handle multi-color and multi-playstyle decks", () => {
+  it("should normalize multi-color and multi-playstyle deck scores by attribute count", () => {
     const weights = makeZeroWeights();
     weights.colors.Blue = 2;
     weights.colors.Purple = 2;
@@ -262,8 +262,30 @@ describe("calculateDeckScore", () => {
       playstyle: ["midrange"],
     };
 
-    expect(calculateDeckScore(multiDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+    expect(calculateDeckScore(multiDeck, weights, EMPTY_ANSWERS)).toBe(
       calculateDeckScore(singleDeck, weights, EMPTY_ANSWERS),
+    );
+  });
+
+  it("should give focused single-attribute deck higher score when only one attribute matches", () => {
+    const weights = makeZeroWeights();
+    weights.colors.Blue = 3;
+    weights.playstyles.midrange = 3;
+
+    const multiDeck: Deck = {
+      ...baseDeck,
+      colors: ["Blue", "Purple"],
+      playstyle: ["midrange", "combo"],
+    };
+    const singleDeck: Deck = {
+      ...baseDeck,
+      id: "single",
+      colors: ["Blue"],
+      playstyle: ["midrange"],
+    };
+
+    expect(calculateDeckScore(singleDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+      calculateDeckScore(multiDeck, weights, EMPTY_ANSWERS),
     );
   });
 
