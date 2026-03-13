@@ -48,9 +48,11 @@ export interface Deck {
 
 export interface QuizQuestion {
   id: string;
+  slot: number;
   text: string;
   description: string;
   options: QuizOption[];
+  condition?: Record<string, string[]>;
 }
 
 export interface QuizOption {

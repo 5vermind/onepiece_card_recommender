@@ -11,9 +11,10 @@ import {
 
 const CATEGORY_MULTIPLIERS = {
   color: 1.0,
-  playstyle: 1.5, // Heaviest — core user preference
+  playstyle: 1.5,
   tier: 1.0,
   difficulty: 0.8,
+  budget: 0.6,
 } as const;
 
 /**
@@ -73,26 +74,83 @@ export function aggregateWeights(
 /**
  * Calculate a weighted score for a single deck against the aggregated user preferences.
  */
-export function calculateDeckScore(deck: Deck, weights: AggregatedWeights): number {
-  // Color score: sum of weights for each color the deck has
+export function calculateDeckScore(
+  deck: Deck,
+  weights: AggregatedWeights,
+  answers: Record<string, string>,
+): number {
   const colorScore = deck.colors.reduce((sum, color) => sum + (weights.colors[color] ?? 0), 0);
 
-  // Playstyle score: sum of weights for each playstyle the deck has
   const playstyleScore = deck.playstyle.reduce(
     (sum, style) => sum + (weights.playstyles[style] ?? 0),
     0,
   );
 
-  // Tier score: weight for the deck's tier
   const tierScore = weights.tiers[deck.tier] ?? 0;
-
-  // Difficulty score: weight for the deck's difficulty
   const difficultyScore = weights.difficulties[deck.difficulty] ?? 0;
+  const budgetScore = weights.budgets[deck.budgetTier] ?? 0;
 
-  return (
+  const base =
     colorScore * CATEGORY_MULTIPLIERS.color +
     playstyleScore * CATEGORY_MULTIPLIERS.playstyle +
     tierScore * CATEGORY_MULTIPLIERS.tier +
-    difficultyScore * CATEGORY_MULTIPLIERS.difficulty
-  );
+    difficultyScore * CATEGORY_MULTIPLIERS.difficulty +
+    budgetScore * CATEGORY_MULTIPLIERS.budget;
+
+  return base + calculateSynergyBonus(deck, answers);
+}
+
+interface SynergyRule {
+  conditions: Record<string, string[]>;
+  deckFilter: (deck: Deck) => boolean;
+  bonus: number;
+}
+
+const SYNERGY_RULES: SynergyRule[] = [
+  {
+    conditions: { "q1-experience": ["q1-beginner"], "q2-playstyle": ["q2-aggro"] },
+    deckFilter: (d) => d.playstyle.includes("aggro") && d.difficulty === "medium",
+    bonus: 2.0,
+  },
+  {
+    conditions: { "q2-playstyle": ["q2-aggro"], "q4-tempo": ["q4-fast"] },
+    deckFilter: (d) => d.playstyle.includes("aggro"),
+    bonus: 1.5,
+  },
+  {
+    conditions: { "q2-playstyle": ["q2-control"], "q4-tempo": ["q4-long"] },
+    deckFilter: (d) => d.playstyle.includes("control"),
+    bonus: 1.5,
+  },
+  {
+    conditions: { "q2-playstyle": ["q2-combo"], "q1-experience": ["q1-experienced"] },
+    deckFilter: (d) => d.playstyle.includes("combo") && d.difficulty === "hard",
+    bonus: 2.0,
+  },
+  {
+    conditions: { "q1-experience": ["q1-experienced"], "q5-goal": ["q5-competitive"] },
+    deckFilter: (d) => d.tier === "S",
+    bonus: 2.5,
+  },
+  {
+    conditions: { "q6-budget": ["q6-low"], "q5-goal": ["q5-casual"] },
+    deckFilter: (d) => d.budgetTier === "budget",
+    bonus: 2.0,
+  },
+];
+
+function calculateSynergyBonus(deck: Deck, answers: Record<string, string>): number {
+  let bonus = 0;
+
+  for (const rule of SYNERGY_RULES) {
+    const conditionsMet = Object.entries(rule.conditions).every(([questionId, validAnswers]) =>
+      validAnswers.includes(answers[questionId]),
+    );
+
+    if (conditionsMet && rule.deckFilter(deck)) {
+      bonus += rule.bonus;
+    }
+  }
+
+  return bonus;
 }

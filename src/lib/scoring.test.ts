@@ -2,10 +2,10 @@ import { describe, it, expect } from "vitest";
 import { aggregateWeights, calculateDeckScore } from "./scoring";
 import { type AggregatedWeights, type Deck, type QuizQuestion } from "./types";
 
-// Minimal question fixtures for testing
 const mockQuestions: QuizQuestion[] = [
   {
     id: "q1",
+    slot: 0,
     text: "테스트 질문 1",
     description: "설명",
     options: [
@@ -28,6 +28,7 @@ const mockQuestions: QuizQuestion[] = [
   },
   {
     id: "q2",
+    slot: 1,
     text: "테스트 질문 2",
     description: "설명",
     options: [
@@ -47,6 +48,7 @@ const mockQuestions: QuizQuestion[] = [
   },
   {
     id: "q3",
+    slot: 2,
     text: "테스트 질문 3",
     description: "설명",
     options: [
@@ -72,8 +74,11 @@ function makeZeroWeights(): AggregatedWeights {
     playstyles: { aggro: 0, midrange: 0, control: 0, combo: 0 },
     tiers: { S: 0, A: 0, B: 0, C: 0 },
     difficulties: { easy: 0, medium: 0, hard: 0 },
+    budgets: { budget: 0, mid: 0, expensive: 0 },
   };
 }
+
+const EMPTY_ANSWERS: Record<string, string> = {};
 
 const baseDeck: Deck = {
   id: "test-deck",
@@ -89,6 +94,9 @@ const baseDeck: Deck = {
   description: "테스트 덱입니다",
   strengths: ["강점1"],
   weaknesses: ["약점1"],
+  matchups: ["테스트 상성"],
+  keyCards: ["카드1"],
+  playTips: ["팁1"],
   tags: ["테스트"],
 };
 
@@ -101,7 +109,6 @@ describe("aggregateWeights", () => {
     expect(result.difficulties.medium).toBe(1);
     expect(result.tiers.A).toBe(1);
     expect(result.tiers.B).toBe(1);
-    // Untouched categories should be 0
     expect(result.colors.Red).toBe(0);
     expect(result.playstyles.aggro).toBe(0);
   });
@@ -130,7 +137,6 @@ describe("aggregateWeights", () => {
     const answers = { "nonexistent-q": "some-option" };
     const result = aggregateWeights(answers, mockQuestions);
 
-    // All zeroes — unknown question skipped
     expect(result.colors.Red).toBe(0);
     expect(result.playstyles.aggro).toBe(0);
   });
@@ -143,13 +149,14 @@ describe("aggregateWeights", () => {
     expect(result.tiers.A).toBe(0);
   });
 
-  it("should return all four weight categories", () => {
+  it("should return all five weight categories", () => {
     const result = aggregateWeights({}, mockQuestions);
 
     expect(result).toHaveProperty("colors");
     expect(result).toHaveProperty("playstyles");
     expect(result).toHaveProperty("tiers");
     expect(result).toHaveProperty("difficulties");
+    expect(result).toHaveProperty("budgets");
   });
 });
 
@@ -165,8 +172,8 @@ describe("calculateDeckScore", () => {
       colors: ["Blue" as const],
     };
 
-    expect(calculateDeckScore(redDeck, weights)).toBeGreaterThan(
-      calculateDeckScore(blueDeck, weights),
+    expect(calculateDeckScore(redDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+      calculateDeckScore(blueDeck, weights, EMPTY_ANSWERS),
     );
   });
 
@@ -181,24 +188,21 @@ describe("calculateDeckScore", () => {
       playstyle: ["control" as const],
     };
 
-    expect(calculateDeckScore(aggroDeck, weights)).toBeGreaterThan(
-      calculateDeckScore(controlDeck, weights),
+    expect(calculateDeckScore(aggroDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+      calculateDeckScore(controlDeck, weights, EMPTY_ANSWERS),
     );
   });
 
   it("should weight playstyle higher than other categories", () => {
-    // Playstyle multiplier is 1.5 vs color 1.0
     const weights = makeZeroWeights();
     weights.playstyles.aggro = 3;
     weights.colors.Blue = 3;
 
-    // Deck matching only playstyle
     const playstyleDeck = {
       ...baseDeck,
       colors: ["Green" as const],
       playstyle: ["aggro" as const],
     };
-    // Deck matching only color
     const colorDeck = {
       ...baseDeck,
       id: "color-deck",
@@ -206,8 +210,8 @@ describe("calculateDeckScore", () => {
       playstyle: ["control" as const],
     };
 
-    expect(calculateDeckScore(playstyleDeck, weights)).toBeGreaterThan(
-      calculateDeckScore(colorDeck, weights),
+    expect(calculateDeckScore(playstyleDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+      calculateDeckScore(colorDeck, weights, EMPTY_ANSWERS),
     );
   });
 
@@ -228,14 +232,14 @@ describe("calculateDeckScore", () => {
       difficulty: "hard" as const,
     };
 
-    expect(calculateDeckScore(matchDeck, weights)).toBeGreaterThan(
-      calculateDeckScore(mismatchDeck, weights),
+    expect(calculateDeckScore(matchDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+      calculateDeckScore(mismatchDeck, weights, EMPTY_ANSWERS),
     );
   });
 
   it("should return 0 for a deck with no matching weights", () => {
     const weights = makeZeroWeights();
-    const score = calculateDeckScore(baseDeck, weights);
+    const score = calculateDeckScore(baseDeck, weights, EMPTY_ANSWERS);
     expect(score).toBe(0);
   });
 
@@ -258,9 +262,57 @@ describe("calculateDeckScore", () => {
       playstyle: ["midrange"],
     };
 
-    // Multi-deck should score higher because it matches more categories
-    expect(calculateDeckScore(multiDeck, weights)).toBeGreaterThan(
-      calculateDeckScore(singleDeck, weights),
+    expect(calculateDeckScore(multiDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+      calculateDeckScore(singleDeck, weights, EMPTY_ANSWERS),
+    );
+  });
+
+  it("should apply synergy bonus for beginner + aggro combination", () => {
+    const weights = makeZeroWeights();
+    const synergyAnswers = {
+      "q1-experience": "q1-beginner",
+      "q2-playstyle": "q2-aggro",
+    };
+
+    const mediumAggroDeck: Deck = {
+      ...baseDeck,
+      playstyle: ["aggro"],
+      difficulty: "medium",
+    };
+
+    const scoreWithSynergy = calculateDeckScore(mediumAggroDeck, weights, synergyAnswers);
+    const scoreWithout = calculateDeckScore(mediumAggroDeck, weights, EMPTY_ANSWERS);
+
+    expect(scoreWithSynergy).toBeGreaterThan(scoreWithout);
+  });
+
+  it("should apply synergy bonus for experienced + competitive combination", () => {
+    const weights = makeZeroWeights();
+    const synergyAnswers = {
+      "q1-experience": "q1-experienced",
+      "q5-goal": "q5-competitive",
+    };
+
+    const sTierDeck: Deck = {
+      ...baseDeck,
+      tier: "S",
+    };
+
+    const scoreWithSynergy = calculateDeckScore(sTierDeck, weights, synergyAnswers);
+    const scoreWithout = calculateDeckScore(sTierDeck, weights, EMPTY_ANSWERS);
+
+    expect(scoreWithSynergy - scoreWithout).toBe(2.5);
+  });
+
+  it("should apply budget scoring based on budgetTier weight", () => {
+    const weights = makeZeroWeights();
+    weights.budgets.budget = 3;
+
+    const budgetDeck: Deck = { ...baseDeck, budgetTier: "budget" };
+    const expensiveDeck: Deck = { ...baseDeck, id: "expensive", budgetTier: "expensive" };
+
+    expect(calculateDeckScore(budgetDeck, weights, EMPTY_ANSWERS)).toBeGreaterThan(
+      calculateDeckScore(expensiveDeck, weights, EMPTY_ANSWERS),
     );
   });
 });

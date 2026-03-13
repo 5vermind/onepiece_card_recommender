@@ -5,25 +5,18 @@ import {
   type Difficulty,
   type Leader,
   type Playstyle,
-  type QuizQuestion,
   type AggregatedWeights,
 } from "@/lib/types";
 import { aggregateWeights, calculateDeckScore } from "@/lib/scoring";
-import questionsData from "@/data/questions.json";
+import { resolveQuestions } from "@/lib/quiz-flow";
 import decksData from "@/data/decks.json";
 import leadersData from "@/data/leaders.json";
 
-const questions = questionsData as QuizQuestion[];
 const decks = decksData as Deck[];
 const leaders = leadersData as Leader[];
 
-/**
- * Given user answers, score all decks and return a full ranking.
- * Caller uses `.slice(0, 3)` for top 3 recommendations.
- */
-export function recommendDecks(
-  answers: Record<string, string>,
-): DeckRecommendation[] {
+export function recommendDecks(answers: Record<string, string>): DeckRecommendation[] {
+  const questions = resolveQuestions(answers);
   const weights = aggregateWeights(answers, questions);
 
   const scored = decks
@@ -40,7 +33,7 @@ export function recommendDecks(
           power: 0,
           set: "",
         },
-        score: calculateDeckScore(deck, weights),
+        score: calculateDeckScore(deck, weights, answers),
         matchReasons: generateMatchReasons(deck, weights),
       };
     })
@@ -52,10 +45,7 @@ export function recommendDecks(
 /**
  * Generate human-readable Korean match reasons for a deck based on user weights.
  */
-export function generateMatchReasons(
-  deck: Deck,
-  weights: AggregatedWeights,
-): string[] {
+export function generateMatchReasons(deck: Deck, weights: AggregatedWeights): string[] {
   const reasons: string[] = [];
 
   // Playstyle match

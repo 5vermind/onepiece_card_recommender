@@ -2,9 +2,7 @@
 
 import { useState, useCallback, useMemo } from "react";
 import { type QuizQuestion } from "@/lib/types";
-import questionsData from "@/data/questions.json";
-
-const questions = questionsData as QuizQuestion[];
+import { resolveQuestions, TOTAL_SLOTS } from "@/lib/quiz-flow";
 
 interface UseQuizStateReturn {
   currentStep: number;
@@ -27,11 +25,13 @@ export function useQuizState(): UseQuizStateReturn {
   const [answers, setAnswers] = useState<Record<string, string>>({});
   const [isComplete, setIsComplete] = useState(false);
 
-  const totalSteps = questions.length;
+  const totalSteps = TOTAL_SLOTS;
+
+  const resolvedQuestions = useMemo(() => resolveQuestions(answers), [answers]);
 
   const currentQuestion = useMemo(
-    () => questions[currentStep],
-    [currentStep],
+    () => resolvedQuestions[currentStep],
+    [resolvedQuestions, currentStep],
   );
 
   const selectedOptionId = useMemo(
@@ -47,12 +47,28 @@ export function useQuizState(): UseQuizStateReturn {
   const canGoNext = selectedOptionId !== null;
   const canGoPrevious = currentStep > 0;
 
-  const selectAnswer = useCallback(
-    (questionId: string, optionId: string) => {
-      setAnswers((prev) => ({ ...prev, [questionId]: optionId }));
-    },
-    [],
-  );
+  const selectAnswer = useCallback((questionId: string, optionId: string) => {
+    setAnswers((prev) => {
+      const next = { ...prev, [questionId]: optionId };
+
+      const prevResolved = resolveQuestions(prev);
+      const nextResolved = resolveQuestions(next);
+
+      let cleared = next;
+      for (let slot = 0; slot < TOTAL_SLOTS; slot++) {
+        if (prevResolved[slot].id !== nextResolved[slot].id) {
+          const staleId = prevResolved[slot].id;
+          if (staleId in cleared) {
+            const { [staleId]: _discarded, ...rest } = cleared;
+            void _discarded;
+            cleared = rest;
+          }
+        }
+      }
+
+      return cleared;
+    });
+  }, []);
 
   const goToNextStep = useCallback(() => {
     if (currentStep < totalSteps - 1) {

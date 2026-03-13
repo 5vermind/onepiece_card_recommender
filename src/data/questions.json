@@ -1,78 +1,250 @@
 [
   {
     "id": "q1-experience",
+    "slot": 0,
     "text": "원피스 카드 게임 경험이 어느 정도인가요?",
     "description": "경험에 맞는 난이도의 덱을 추천해 드릴게요",
     "options": [
-      { "id": "q1-beginner", "text": "처음이에요! 이제 시작하려고요", "icon": "🌱", "weights": { "difficulties": { "easy": 3, "medium": 1 }, "tiers": { "A": 1, "B": 1 } } },
-      { "id": "q1-intermediate", "text": "몇 번 해봤어요, 룰은 알아요", "icon": "📚", "weights": { "difficulties": { "easy": 1, "medium": 3, "hard": 1 } } },
-      { "id": "q1-experienced", "text": "꽤 많이 했어요! 대회도 나가봤어요", "icon": "🔥", "weights": { "difficulties": { "medium": 1, "hard": 3 }, "tiers": { "S": 1 } } }
+      {
+        "id": "q1-beginner",
+        "text": "처음이에요! 이제 시작하려고요",
+        "icon": "🌱",
+        "weights": { "difficulties": { "easy": 3, "medium": 1 }, "tiers": { "A": 1, "B": 1 } }
+      },
+      {
+        "id": "q1-intermediate",
+        "text": "몇 번 해봤어요, 룰은 알아요",
+        "icon": "📚",
+        "weights": { "difficulties": { "easy": 1, "medium": 3, "hard": 1 } }
+      },
+      {
+        "id": "q1-experienced",
+        "text": "꽤 많이 했어요! 대회도 나가봤어요",
+        "icon": "🔥",
+        "weights": { "difficulties": { "medium": 1, "hard": 3 }, "tiers": { "S": 1 } }
+      }
     ]
   },
   {
     "id": "q2-playstyle",
+    "slot": 1,
     "text": "어떤 스타일로 게임하고 싶으세요?",
     "description": "가장 중요한 질문이에요! 덱의 핵심 전략을 결정합니다",
     "options": [
-      { "id": "q2-aggro", "text": "빠르게 공격해서 이기고 싶어요!", "icon": "⚔️", "weights": { "playstyles": { "aggro": 3 } } },
-      { "id": "q2-midrange", "text": "균형 잡힌 전략으로 유연하게!", "icon": "⚖️", "weights": { "playstyles": { "midrange": 3 } } },
-      { "id": "q2-control", "text": "방어하면서 후반에 역전!", "icon": "🛡️", "weights": { "playstyles": { "control": 3 } } },
-      { "id": "q2-combo", "text": "독특한 콤보로 한 방!", "icon": "🎯", "weights": { "playstyles": { "combo": 3 } } }
+      {
+        "id": "q2-aggro",
+        "text": "빠르게 공격해서 이기고 싶어요!",
+        "icon": "⚔️",
+        "weights": { "playstyles": { "aggro": 3 } }
+      },
+      {
+        "id": "q2-midrange",
+        "text": "균형 잡힌 전략으로 유연하게!",
+        "icon": "⚖️",
+        "weights": { "playstyles": { "midrange": 3 } }
+      },
+      {
+        "id": "q2-control",
+        "text": "방어하면서 후반에 역전!",
+        "icon": "🛡️",
+        "weights": { "playstyles": { "control": 3 } }
+      },
+      {
+        "id": "q2-combo",
+        "text": "독특한 콤보로 한 방!",
+        "icon": "🎯",
+        "weights": { "playstyles": { "combo": 3 } }
+      }
     ]
   },
   {
     "id": "q3-color",
+    "slot": 2,
     "text": "마음에 드는 색상을 골라주세요!",
     "description": "원피스 카드 게임의 6가지 색상은 각각 다른 전략을 대표해요",
     "options": [
-      { "id": "q3-red", "text": "레드 — 정열적인 공격", "icon": "🔴", "weights": { "colors": { "Red": 3 } } },
-      { "id": "q3-green", "text": "그린 — 성장과 버프", "icon": "🟢", "weights": { "colors": { "Green": 3 } } },
-      { "id": "q3-blue", "text": "블루 — 전략적 컨트롤", "icon": "🔵", "weights": { "colors": { "Blue": 3 } } },
-      { "id": "q3-purple", "text": "퍼플 — 트리키한 플레이", "icon": "🟣", "weights": { "colors": { "Purple": 3 } } },
-      { "id": "q3-black", "text": "블랙 — 상대 방해와 제거", "icon": "⚫", "weights": { "colors": { "Black": 3 } } },
-      { "id": "q3-yellow", "text": "옐로 — 트리거와 방어", "icon": "🟡", "weights": { "colors": { "Yellow": 3 } } },
-      { "id": "q3-any", "text": "상관없어요!", "icon": "🌈", "weights": { "colors": { "Red": 1, "Green": 1, "Blue": 1, "Purple": 1, "Black": 1, "Yellow": 1 } } }
+      {
+        "id": "q3-red",
+        "text": "레드 — 정열적인 공격",
+        "icon": "🔴",
+        "weights": { "colors": { "Red": 3 } }
+      },
+      {
+        "id": "q3-green",
+        "text": "그린 — 성장과 버프",
+        "icon": "🟢",
+        "weights": { "colors": { "Green": 3 } }
+      },
+      {
+        "id": "q3-blue",
+        "text": "블루 — 전략적 컨트롤",
+        "icon": "🔵",
+        "weights": { "colors": { "Blue": 3 } }
+      },
+      {
+        "id": "q3-purple",
+        "text": "퍼플 — 트리키한 플레이",
+        "icon": "🟣",
+        "weights": { "colors": { "Purple": 3 } }
+      },
+      {
+        "id": "q3-black",
+        "text": "블랙 — 상대 방해와 제거",
+        "icon": "⚫",
+        "weights": { "colors": { "Black": 3 } }
+      },
+      {
+        "id": "q3-yellow",
+        "text": "옐로 — 트리거와 방어",
+        "icon": "🟡",
+        "weights": { "colors": { "Yellow": 3 } }
+      },
+      {
+        "id": "q3-any",
+        "text": "상관없어요!",
+        "icon": "🌈",
+        "weights": {
+          "colors": { "Red": 1, "Green": 1, "Blue": 1, "Purple": 1, "Black": 1, "Yellow": 1 }
+        }
+      }
     ]
   },
   {
     "id": "q4-tempo",
+    "slot": 3,
+    "condition": { "q1-experience": ["q1-beginner", "q1-intermediate"] },
     "text": "게임 템포는 어떤 걸 선호하세요?",
     "description": "빠른 게임과 느긋한 게임은 필요한 덱이 완전히 달라요",
     "options": [
-      { "id": "q4-fast", "text": "5분 안에 끝내고 싶어요!", "icon": "⚡", "weights": { "playstyles": { "aggro": 2 }, "difficulties": { "easy": 1 } } },
-      { "id": "q4-medium", "text": "적당한 길이가 좋아요", "icon": "⏱️", "weights": { "playstyles": { "midrange": 2 } } },
-      { "id": "q4-long", "text": "긴 호흡의 전략 싸움이 좋아요", "icon": "♟️", "weights": { "playstyles": { "control": 2, "combo": 1 } } }
+      {
+        "id": "q4-fast",
+        "text": "5분 안에 끝내고 싶어요!",
+        "icon": "⚡",
+        "weights": { "playstyles": { "aggro": 2 }, "difficulties": { "easy": 1 } }
+      },
+      {
+        "id": "q4-medium",
+        "text": "적당한 길이가 좋아요",
+        "icon": "⏱️",
+        "weights": { "playstyles": { "midrange": 2 } }
+      },
+      {
+        "id": "q4-long",
+        "text": "긴 호흡의 전략 싸움이 좋아요",
+        "icon": "♟️",
+        "weights": { "playstyles": { "control": 2, "combo": 1 } }
+      }
+    ]
+  },
+  {
+    "id": "q4-meta",
+    "slot": 3,
+    "condition": { "q1-experience": ["q1-experienced"] },
+    "text": "현재 메타에서 어떤 포지션을 원하세요?",
+    "description": "OP-11 메타 환경을 기반으로 추천해 드릴게요",
+    "options": [
+      {
+        "id": "q4-top",
+        "text": "톱 메타 — 가장 강한 덱!",
+        "icon": "👑",
+        "weights": { "tiers": { "S": 3, "A": 1 }, "budgets": { "expensive": 2 } }
+      },
+      {
+        "id": "q4-counter",
+        "text": "앤티 메타 — 유행 덱 카운터!",
+        "icon": "🎯",
+        "weights": { "tiers": { "A": 2, "B": 1 }, "playstyles": { "control": 1 } }
+      },
+      {
+        "id": "q4-off",
+        "text": "오프 메타 — 남들이 안 쓰는 독특한 덱!",
+        "icon": "🌀",
+        "weights": { "tiers": { "B": 2, "C": 2 }, "playstyles": { "combo": 1 } }
+      }
     ]
   },
   {
     "id": "q5-goal",
+    "slot": 4,
     "text": "어떤 목적으로 덱을 찾고 있나요?",
     "description": "대회용 덱과 캐주얼 덱은 추천 기준이 달라요",
     "options": [
-      { "id": "q5-competitive", "text": "대회에서 이기고 싶어요!", "icon": "🏆", "weights": { "tiers": { "S": 3, "A": 2 } } },
-      { "id": "q5-casual", "text": "친구들과 재미있게 즐기고 싶어요!", "icon": "🎉", "weights": { "tiers": { "A": 1, "B": 2, "C": 2 } } },
-      { "id": "q5-both", "text": "이기면서도 재미있게!", "icon": "💪", "weights": { "tiers": { "S": 2, "A": 2, "B": 1 } } }
+      {
+        "id": "q5-competitive",
+        "text": "대회에서 이기고 싶어요!",
+        "icon": "🏆",
+        "weights": { "tiers": { "S": 3, "A": 2 } }
+      },
+      {
+        "id": "q5-casual",
+        "text": "친구들과 재미있게 즐기고 싶어요!",
+        "icon": "🎉",
+        "weights": { "tiers": { "A": 1, "B": 2, "C": 2 } }
+      },
+      {
+        "id": "q5-both",
+        "text": "이기면서도 재미있게!",
+        "icon": "💪",
+        "weights": { "tiers": { "S": 2, "A": 2, "B": 1 } }
+      }
     ]
   },
   {
     "id": "q6-budget",
+    "slot": 5,
     "text": "덱 구성 예산은 어느 정도인가요?",
     "description": "카드 가격은 덱마다 천차만별이에요",
     "options": [
-      { "id": "q6-low", "text": "최대한 저렴하게!", "icon": "💰", "weights": { "budgets": { "budget": 3, "mid": 1 } } },
-      { "id": "q6-mid", "text": "적당히 투자할 수 있어요", "icon": "💳", "weights": { "budgets": { "budget": 1, "mid": 3, "expensive": 1 } } },
-      { "id": "q6-high", "text": "강하면 가격은 상관없어요!", "icon": "💎", "weights": { "budgets": { "mid": 1, "expensive": 3 }, "tiers": { "S": 1 } } }
+      {
+        "id": "q6-low",
+        "text": "최대한 저렴하게!",
+        "icon": "💰",
+        "weights": { "budgets": { "budget": 3, "mid": 1 } }
+      },
+      {
+        "id": "q6-mid",
+        "text": "적당히 투자할 수 있어요",
+        "icon": "💳",
+        "weights": { "budgets": { "budget": 1, "mid": 3, "expensive": 1 } }
+      },
+      {
+        "id": "q6-high",
+        "text": "강하면 가격은 상관없어요!",
+        "icon": "💎",
+        "weights": { "budgets": { "mid": 1, "expensive": 3 }, "tiers": { "S": 1 } }
+      }
     ]
   },
   {
     "id": "q7-character",
+    "slot": 6,
     "text": "좋아하는 캐릭터 계열이 있나요?",
     "description": "덱 리더는 좋아하는 캐릭터일수록 더 재미있어요!",
     "options": [
-      { "id": "q7-luffy", "text": "루피 & 밀짚모자 해적단", "icon": "👒", "weights": { "colors": { "Red": 1, "Purple": 1 } } },
-      { "id": "q7-villain", "text": "빌런! 티치, 루치, 카타쿠리", "icon": "😈", "weights": { "colors": { "Black": 2, "Purple": 1 } } },
-      { "id": "q7-supernova", "text": "최악의 세대 (로, 보니, 조로)", "icon": "⭐", "weights": { "colors": { "Green": 1, "Red": 1 } } },
-      { "id": "q7-marine", "text": "해군 & 혁명군 (스모커, 베티)", "icon": "⚓", "weights": { "colors": { "Red": 1, "Yellow": 1 } } },
+      {
+        "id": "q7-luffy",
+        "text": "루피 & 밀짚모자 해적단",
+        "icon": "👒",
+        "weights": { "colors": { "Red": 1, "Purple": 1 } }
+      },
+      {
+        "id": "q7-villain",
+        "text": "빌런! 티치, 루치, 카타쿠리",
+        "icon": "😈",
+        "weights": { "colors": { "Black": 2, "Purple": 1 } }
+      },
+      {
+        "id": "q7-supernova",
+        "text": "최악의 세대 (로, 보니, 조로)",
+        "icon": "⭐",
+        "weights": { "colors": { "Green": 1, "Red": 1 } }
+      },
+      {
+        "id": "q7-marine",
+        "text": "해군 & 혁명군 (스모커, 베티)",
+        "icon": "⚓",
+        "weights": { "colors": { "Red": 1, "Yellow": 1 } }
+      },
       { "id": "q7-other", "text": "특별히 없어요", "icon": "🌊", "weights": {} }
     ]
   }

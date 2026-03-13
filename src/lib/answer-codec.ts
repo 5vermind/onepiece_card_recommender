@@ -1,10 +1,9 @@
-import { type QuizQuestion } from "@/lib/types";
-import questionsData from "@/data/questions.json";
-
-const questions = questionsData as QuizQuestion[];
+import { resolveQuestions, resolveQuestionForSlot, TOTAL_SLOTS } from "@/lib/quiz-flow";
 
 export function encodeAnswers(answers: Record<string, string>): string {
-  return questions
+  const resolved = resolveQuestions(answers);
+
+  return resolved
     .map((q) => {
       const selectedId = answers[q.id];
       const idx = q.options.findIndex((o) => o.id === selectedId);
@@ -14,15 +13,24 @@ export function encodeAnswers(answers: Record<string, string>): string {
 }
 
 export function decodeAnswers(compact: string): Record<string, string> | null {
-  if (compact.length !== questions.length) return null;
+  if (compact.length !== TOTAL_SLOTS) return null;
 
   const result: Record<string, string> = {};
 
-  for (let i = 0; i < questions.length; i++) {
-    const idx = Number(compact[i]);
-    const option = questions[i].options[idx];
+  const slot0Question = resolveQuestionForSlot(0, {});
+  const slot0Idx = Number(compact[0]);
+  const slot0Option = slot0Question.options[slot0Idx];
+  if (!slot0Option) return null;
+  result[slot0Question.id] = slot0Option.id;
+
+  const resolved = resolveQuestions(result);
+
+  for (let slot = 1; slot < TOTAL_SLOTS; slot++) {
+    const question = resolved[slot];
+    const idx = Number(compact[slot]);
+    const option = question.options[idx];
     if (!option) return null;
-    result[questions[i].id] = option.id;
+    result[question.id] = option.id;
   }
 
   return result;
@@ -39,7 +47,7 @@ export function parseAnswersParam(param: string): Record<string, string> | null 
       return decoded as Record<string, string>;
     }
   } catch {
-    /* invalid JSON */
+    /* invalid JSON — fall through */
   }
 
   return null;

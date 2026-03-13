@@ -2,14 +2,15 @@ import { describe, it, expect } from "vitest";
 import { recommendDecks, generateMatchReasons } from "./recommend";
 import { type AggregatedWeights } from "./types";
 
-// Helper: create full answer sets for common scenarios
 function makeAggroBeginnerAnswers(): Record<string, string> {
   return {
     "q1-experience": "q1-beginner",
     "q2-playstyle": "q2-aggro",
     "q3-color": "q3-red",
-    "q4-goal": "q4-competitive",
-    "q5-complexity": "q5-simple",
+    "q4-tempo": "q4-fast",
+    "q5-goal": "q5-competitive",
+    "q6-budget": "q6-mid",
+    "q7-character": "q7-luffy",
   };
 }
 
@@ -18,8 +19,10 @@ function makeControlExperiencedAnswers(): Record<string, string> {
     "q1-experience": "q1-experienced",
     "q2-playstyle": "q2-control",
     "q3-color": "q3-black",
-    "q4-goal": "q4-competitive",
-    "q5-complexity": "q5-complex",
+    "q4-meta": "q4-top",
+    "q5-goal": "q5-competitive",
+    "q6-budget": "q6-high",
+    "q7-character": "q7-villain",
   };
 }
 
@@ -28,8 +31,10 @@ function makeCasualMidrangeAnswers(): Record<string, string> {
     "q1-experience": "q1-intermediate",
     "q2-playstyle": "q2-midrange",
     "q3-color": "q3-green",
-    "q4-goal": "q4-casual",
-    "q5-complexity": "q5-moderate",
+    "q4-tempo": "q4-medium",
+    "q5-goal": "q5-casual",
+    "q6-budget": "q6-mid",
+    "q7-character": "q7-supernova",
   };
 }
 
@@ -43,7 +48,6 @@ describe("recommendDecks", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
     const top3 = results.slice(0, 3);
 
-    // At least 2 of top 3 should include aggro playstyle
     const aggroCount = top3.filter((r) => r.deck.playstyle.includes("aggro")).length;
     expect(aggroCount).toBeGreaterThanOrEqual(2);
   });
@@ -60,7 +64,6 @@ describe("recommendDecks", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
     const top3 = results.slice(0, 3);
 
-    // At least one of top 3 should include Red
     const redCount = top3.filter((r) => r.deck.colors.includes("Red")).length;
     expect(redCount).toBeGreaterThanOrEqual(1);
   });
@@ -69,7 +72,6 @@ describe("recommendDecks", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
     const top3 = results.slice(0, 3);
 
-    // All top 3 should be S or A tier for competitive answers
     const highTierCount = top3.filter((r) => r.deck.tier === "S" || r.deck.tier === "A").length;
     expect(highTierCount).toBeGreaterThanOrEqual(2);
   });
@@ -114,6 +116,14 @@ describe("recommendDecks", () => {
 
     const controlCount = top3.filter((r) => r.deck.playstyle.includes("control")).length;
     expect(controlCount).toBeGreaterThanOrEqual(2);
+  });
+
+  it("should use q4-meta for experienced users instead of q4-tempo", () => {
+    const experiencedAnswers = makeControlExperiencedAnswers();
+    const results = recommendDecks(experiencedAnswers);
+
+    expect(results.length).toBe(18);
+    expect(results[0].score).toBeGreaterThan(0);
   });
 });
 
