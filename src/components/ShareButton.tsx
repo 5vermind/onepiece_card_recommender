@@ -3,10 +3,6 @@
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/Button";
 
-interface ShareButtonProps {
-  shareText: string;
-}
-
 type ShareState = "idle" | "copied" | "shared" | "error";
 
 const LABEL: Record<ShareState, string> = {
@@ -16,7 +12,7 @@ const LABEL: Record<ShareState, string> = {
   error: "공유 실패 😢",
 };
 
-export function ShareButton({ shareText }: ShareButtonProps) {
+export function ShareButton() {
   const [state, setState] = useState<ShareState>("idle");
 
   const handleShare = useCallback(async () => {
@@ -26,7 +22,6 @@ export function ShareButton({ shareText }: ShareButtonProps) {
       try {
         await navigator.share({
           title: "원피스 카드 게임 덱 추천 결과",
-          text: shareText,
           url,
         });
         setState("shared");
@@ -44,7 +39,7 @@ export function ShareButton({ shareText }: ShareButtonProps) {
     }
 
     setTimeout(() => setState("idle"), 2000);
-  }, [shareText]);
+  }, []);
 
   return (
     <Button variant={state === "idle" ? "secondary" : "ghost"} size="lg" onClick={handleShare}>

@@ -46,11 +46,6 @@ function ResultInner() {
   const top3 = results.slice(0, 3);
   const rest = results.slice(3);
 
-  const shareText = useMemo(() => {
-    const deckNames = top3.map((r, i) => `${i + 1}. ${r.deck.nameKo}`).join("\n");
-    return `🏴‍☠️ 내 원피스 카드 게임 추천 덱\n${deckNames}`;
-  }, [top3]);
-
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <div className="mb-8 text-center">
@@ -90,7 +85,7 @@ function ResultInner() {
       )}
 
       <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-        <ShareButton shareText={shareText} />
+        <ShareButton />
         <Link href="/quiz">
           <Button variant="primary" size="lg">
             다시 하기 🔄
