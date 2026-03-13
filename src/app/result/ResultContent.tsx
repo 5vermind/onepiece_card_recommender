@@ -3,6 +3,7 @@
 import { Suspense, useState, useMemo } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
+import { parseAnswersParam } from "@/lib/answer-codec";
 import { recommendDecks } from "@/lib/recommend";
 import { DeckCard } from "@/components/DeckCard";
 import { ShareButton } from "@/components/ShareButton";
@@ -18,12 +19,12 @@ function ResultInner() {
       return { results: null, error: "답변 데이터가 없습니다." };
     }
 
-    try {
-      const decoded = JSON.parse(decodeURIComponent(param)) as Record<string, string>;
-      return { results: recommendDecks(decoded), error: null };
-    } catch {
+    const answers = parseAnswersParam(param);
+    if (!answers) {
       return { results: null, error: "답변 데이터를 읽을 수 없습니다." };
     }
+
+    return { results: recommendDecks(answers), error: null };
   }, [searchParams]);
 
   if (error || !results) {

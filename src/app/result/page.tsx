@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { parseAnswersParam } from "@/lib/answer-codec";
 import { recommendDecks } from "@/lib/recommend";
 import { ResultContent } from "./ResultContent";
 
@@ -19,15 +20,13 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
   let title = "나의 덱 추천 결과 | 원피스 카드 게임 덱 추천";
   let description = "퀴즈로 찾은 나만의 추천 덱! 당신에게 맞는 덱은 무엇일까요?";
 
-  try {
-    const decoded = JSON.parse(decodeURIComponent(param)) as Record<string, string>;
-    const results = recommendDecks(decoded);
+  const answers = parseAnswersParam(param);
+  if (answers) {
+    const results = recommendDecks(answers);
     const top3 = results.slice(0, 3);
     const names = top3.map((r) => r.deck.nameKo).join(", ");
     title = `추천 덱: ${names} | 원피스 카드 게임`;
     description = `나의 원피스 카드 게임 추천 덱: ${names}. 퀴즈를 풀고 나에게 맞는 덱을 찾아보세요!`;
-  } catch {
-    /* empty — use defaults above */
   }
 
   const ogImageUrl = `/api/og?a=${param}`;

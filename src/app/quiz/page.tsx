@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useQuizState } from "@/hooks/useQuizState";
+import { encodeAnswers } from "@/lib/answer-codec";
 import { QuizStep } from "@/components/quiz/QuizStep";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/Button";
@@ -33,9 +34,8 @@ export default function QuizPage() {
     }
   }
 
-  // Navigate to results when quiz is complete
   if (isComplete) {
-    const encoded = encodeURIComponent(JSON.stringify(answers));
+    const encoded = encodeAnswers(answers);
     router.push(`/result?a=${encoded}`);
     return (
       <div className="flex min-h-[60vh] items-center justify-center">
@@ -55,9 +55,7 @@ export default function QuizPage() {
       <QuizStep
         question={currentQuestion}
         selectedOptionId={selectedOptionId}
-        onSelectOption={(optionId) =>
-          selectAnswer(currentQuestion.id, optionId)
-        }
+        onSelectOption={(optionId) => selectAnswer(currentQuestion.id, optionId)}
       />
 
       {/* Navigation Buttons */}
@@ -70,12 +68,7 @@ export default function QuizPage() {
           <div />
         )}
 
-        <Button
-          variant="primary"
-          size="lg"
-          onClick={handleNext}
-          disabled={!canGoNext}
-        >
+        <Button variant="primary" size="lg" onClick={handleNext} disabled={!canGoNext}>
           {isLastStep ? "결과 보기 🎯" : "다음 →"}
         </Button>
       </div>
