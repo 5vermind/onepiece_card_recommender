@@ -36,7 +36,7 @@ export function ShareButton({ shareText }: ShareButtonProps) {
       }
     } else {
       try {
-        await navigator.clipboard.writeText(`${shareText}\n${url}`);
+        await navigator.clipboard.writeText(url);
         setState("copied");
       } catch {
         setState("error");
