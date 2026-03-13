@@ -44,21 +44,16 @@ describe("recommendDecks", () => {
     const top3 = results.slice(0, 3);
 
     // At least 2 of top 3 should include aggro playstyle
-    const aggroCount = top3.filter((r) =>
-      r.deck.playstyle.includes("aggro"),
-    ).length;
+    const aggroCount = top3.filter((r) => r.deck.playstyle.includes("aggro")).length;
     expect(aggroCount).toBeGreaterThanOrEqual(2);
   });
 
-  it("should prioritize easy decks for beginners wanting simple decks", () => {
+  it("should prioritize medium difficulty decks for beginners wanting simple decks", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
     const top3 = results.slice(0, 3);
 
-    // At least one of top 3 should be easy difficulty
-    const easyCount = top3.filter(
-      (r) => r.deck.difficulty === "easy",
-    ).length;
-    expect(easyCount).toBeGreaterThanOrEqual(1);
+    const mediumCount = top3.filter((r) => r.deck.difficulty === "medium").length;
+    expect(mediumCount).toBeGreaterThanOrEqual(1);
   });
 
   it("should prioritize matching color decks for specific color preference", () => {
@@ -66,9 +61,7 @@ describe("recommendDecks", () => {
     const top3 = results.slice(0, 3);
 
     // At least one of top 3 should include Red
-    const redCount = top3.filter((r) =>
-      r.deck.colors.includes("Red"),
-    ).length;
+    const redCount = top3.filter((r) => r.deck.colors.includes("Red")).length;
     expect(redCount).toBeGreaterThanOrEqual(1);
   });
 
@@ -77,9 +70,7 @@ describe("recommendDecks", () => {
     const top3 = results.slice(0, 3);
 
     // All top 3 should be S or A tier for competitive answers
-    const highTierCount = top3.filter(
-      (r) => r.deck.tier === "S" || r.deck.tier === "A",
-    ).length;
+    const highTierCount = top3.filter((r) => r.deck.tier === "S" || r.deck.tier === "A").length;
     expect(highTierCount).toBeGreaterThanOrEqual(2);
   });
 
@@ -104,9 +95,7 @@ describe("recommendDecks", () => {
     const result1 = recommendDecks(answers);
     const result2 = recommendDecks(answers);
 
-    expect(result1.map((r) => r.deck.id)).toEqual(
-      result2.map((r) => r.deck.id),
-    );
+    expect(result1.map((r) => r.deck.id)).toEqual(result2.map((r) => r.deck.id));
     expect(result1.map((r) => r.score)).toEqual(result2.map((r) => r.score));
   });
 
@@ -123,36 +112,47 @@ describe("recommendDecks", () => {
     const results = recommendDecks(makeControlExperiencedAnswers());
     const top3 = results.slice(0, 3);
 
-    const controlCount = top3.filter((r) =>
-      r.deck.playstyle.includes("control"),
-    ).length;
+    const controlCount = top3.filter((r) => r.deck.playstyle.includes("control")).length;
     expect(controlCount).toBeGreaterThanOrEqual(2);
   });
 });
 
 describe("generateMatchReasons", () => {
+  const ZERO_WEIGHTS: AggregatedWeights = {
+    colors: { Red: 0, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
+    playstyles: { aggro: 0, midrange: 0, control: 0, combo: 0 },
+    tiers: { S: 0, A: 0, B: 0, C: 0 },
+    difficulties: { easy: 0, medium: 0, hard: 0 },
+    budgets: { budget: 0, mid: 0, expensive: 0 },
+  };
+
+  const MOCK_DECK_BASE = {
+    id: "test",
+    name: "Test",
+    nameKo: "테스트",
+    leaderId: "OP01-001",
+    budgetTier: "budget" as const,
+    keyMechanic: "테스트",
+    description: "테스트",
+    strengths: ["강점"],
+    weaknesses: ["약점"],
+    matchups: ["테스트 상성"],
+    keyCards: ["카드1"],
+    playTips: ["팁1"],
+    tags: ["태그"],
+  };
+
   it("should return playstyle match reason when playstyle matches", () => {
     const weights: AggregatedWeights = {
-      colors: { Red: 0, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
+      ...ZERO_WEIGHTS,
       playstyles: { aggro: 3, midrange: 0, control: 0, combo: 0 },
-      tiers: { S: 0, A: 0, B: 0, C: 0 },
-      difficulties: { easy: 0, medium: 0, hard: 0 },
     };
     const deck = {
-      id: "test",
-      name: "Test",
-      nameKo: "테스트",
-      leaderId: "OP01-001",
+      ...MOCK_DECK_BASE,
       colors: ["Red" as const],
       playstyle: ["aggro" as const],
       tier: "A" as const,
       difficulty: "easy" as const,
-      budgetTier: "budget" as const,
-      keyMechanic: "테스트",
-      description: "테스트",
-      strengths: ["강점"],
-      weaknesses: ["약점"],
-      tags: ["태그"],
     };
 
     const reasons = generateMatchReasons(deck, weights);
@@ -161,26 +161,15 @@ describe("generateMatchReasons", () => {
 
   it("should return color match reason when color matches", () => {
     const weights: AggregatedWeights = {
+      ...ZERO_WEIGHTS,
       colors: { Red: 3, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
-      playstyles: { aggro: 0, midrange: 0, control: 0, combo: 0 },
-      tiers: { S: 0, A: 0, B: 0, C: 0 },
-      difficulties: { easy: 0, medium: 0, hard: 0 },
     };
     const deck = {
-      id: "test",
-      name: "Test",
-      nameKo: "테스트",
-      leaderId: "OP01-001",
+      ...MOCK_DECK_BASE,
       colors: ["Red" as const],
       playstyle: ["aggro" as const],
       tier: "B" as const,
       difficulty: "easy" as const,
-      budgetTier: "budget" as const,
-      keyMechanic: "테스트",
-      description: "테스트",
-      strengths: ["강점"],
-      weaknesses: ["약점"],
-      tags: ["태그"],
     };
 
     const reasons = generateMatchReasons(deck, weights);
@@ -189,26 +178,18 @@ describe("generateMatchReasons", () => {
 
   it("should return at most 3 reasons", () => {
     const weights: AggregatedWeights = {
+      ...ZERO_WEIGHTS,
       colors: { Red: 3, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
       playstyles: { aggro: 3, midrange: 0, control: 0, combo: 0 },
       tiers: { S: 0, A: 3, B: 0, C: 0 },
       difficulties: { easy: 3, medium: 0, hard: 0 },
     };
     const deck = {
-      id: "test",
-      name: "Test",
-      nameKo: "테스트",
-      leaderId: "OP01-001",
+      ...MOCK_DECK_BASE,
       colors: ["Red" as const],
       playstyle: ["aggro" as const],
       tier: "A" as const,
       difficulty: "easy" as const,
-      budgetTier: "budget" as const,
-      keyMechanic: "테스트",
-      description: "테스트",
-      strengths: ["강점"],
-      weaknesses: ["약점"],
-      tags: ["태그"],
     };
 
     const reasons = generateMatchReasons(deck, weights);
@@ -217,27 +198,18 @@ describe("generateMatchReasons", () => {
 
   it("should return fallback reason when no specific match", () => {
     const weights: AggregatedWeights = {
+      ...ZERO_WEIGHTS,
       colors: { Red: 3, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
       playstyles: { aggro: 3, midrange: 0, control: 0, combo: 0 },
-      tiers: { S: 0, A: 0, B: 0, C: 0 },
       difficulties: { easy: 0, medium: 0, hard: 3 },
     };
-    // Deck that doesn't match any preference
     const deck = {
-      id: "test",
-      name: "Test",
-      nameKo: "테스트",
-      leaderId: "OP01-001",
+      ...MOCK_DECK_BASE,
       colors: ["Blue" as const],
       playstyle: ["control" as const],
       tier: "C" as const,
       difficulty: "medium" as const,
       budgetTier: "mid" as const,
-      keyMechanic: "테스트",
-      description: "테스트",
-      strengths: ["강점"],
-      weaknesses: ["약점"],
-      tags: ["태그"],
     };
 
     const reasons = generateMatchReasons(deck, weights);

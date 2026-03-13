@@ -1,5 +1,6 @@
 import {
   type AggregatedWeights,
+  type BudgetTier,
   type Color,
   type Deck,
   type Difficulty,
@@ -27,6 +28,7 @@ export function aggregateWeights(
     playstyles: { aggro: 0, midrange: 0, control: 0, combo: 0 },
     tiers: { S: 0, A: 0, B: 0, C: 0 },
     difficulties: { easy: 0, medium: 0, hard: 0 },
+    budgets: { budget: 0, mid: 0, expensive: 0 },
   };
 
   for (const question of questions) {
@@ -58,6 +60,11 @@ export function aggregateWeights(
         result.difficulties[k as Difficulty] += v;
       }
     }
+    if (w.budgets) {
+      for (const [k, v] of Object.entries(w.budgets)) {
+        result.budgets[k as BudgetTier] += v;
+      }
+    }
   }
 
   return result;
@@ -66,15 +73,9 @@ export function aggregateWeights(
 /**
  * Calculate a weighted score for a single deck against the aggregated user preferences.
  */
-export function calculateDeckScore(
-  deck: Deck,
-  weights: AggregatedWeights,
-): number {
+export function calculateDeckScore(deck: Deck, weights: AggregatedWeights): number {
   // Color score: sum of weights for each color the deck has
-  const colorScore = deck.colors.reduce(
-    (sum, color) => sum + (weights.colors[color] ?? 0),
-    0,
-  );
+  const colorScore = deck.colors.reduce((sum, color) => sum + (weights.colors[color] ?? 0), 0);
 
   // Playstyle score: sum of weights for each playstyle the deck has
   const playstyleScore = deck.playstyle.reduce(

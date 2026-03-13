@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { recommendDecks } from "@/lib/recommend";
 import { DeckCard } from "@/components/DeckCard";
+import { ShareButton } from "@/components/ShareButton";
 import { Button } from "@/components/ui/Button";
 
 function ResultContent() {
@@ -18,10 +19,7 @@ function ResultContent() {
     }
 
     try {
-      const decoded = JSON.parse(decodeURIComponent(param)) as Record<
-        string,
-        string
-      >;
+      const decoded = JSON.parse(decodeURIComponent(param)) as Record<string, string>;
       return { results: recommendDecks(decoded), error: null };
     } catch {
       return { results: null, error: "답변 데이터를 읽을 수 없습니다." };
@@ -32,12 +30,8 @@ function ResultContent() {
     return (
       <div className="flex min-h-[60vh] flex-col items-center justify-center px-4 text-center">
         <div className="mb-4 text-5xl">😢</div>
-        <h1 className="text-xl font-bold text-gray-900">
-          {error ?? "문제가 발생했어요"}
-        </h1>
-        <p className="mt-2 text-gray-500">
-          퀴즈를 다시 진행해 주세요.
-        </p>
+        <h1 className="text-xl font-bold text-gray-900">{error ?? "문제가 발생했어요"}</h1>
+        <p className="mt-2 text-gray-500">퀴즈를 다시 진행해 주세요.</p>
         <Link
           href="/quiz"
           className="mt-6 inline-flex h-11 items-center justify-center rounded-lg bg-op-red px-6 font-semibold text-white transition-all hover:brightness-110"
@@ -51,27 +45,24 @@ function ResultContent() {
   const top3 = results.slice(0, 3);
   const rest = results.slice(3);
 
+  const shareText = useMemo(() => {
+    const deckNames = top3.map((r, i) => `${i + 1}. ${r.deck.nameKo}`).join("\n");
+    return `🏴‍☠️ 내 원피스 카드 게임 추천 덱\n${deckNames}`;
+  }, [top3]);
+
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       {/* Header */}
       <div className="mb-8 text-center">
         <div className="mb-2 text-4xl">🏴‍☠️</div>
-        <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">
-          당신에게 추천하는 덱
-        </h1>
-        <p className="mt-2 text-gray-500">
-          퀴즈 결과를 바탕으로 가장 적합한 덱을 찾았어요!
-        </p>
+        <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">당신에게 추천하는 덱</h1>
+        <p className="mt-2 text-gray-500">퀴즈 결과를 바탕으로 가장 적합한 덱을 찾았어요!</p>
       </div>
 
       {/* Top 3 Recommendations */}
       <div className="space-y-4">
         {top3.map((recommendation, index) => (
-          <DeckCard
-            key={recommendation.deck.id}
-            recommendation={recommendation}
-            rank={index + 1}
-          />
+          <DeckCard key={recommendation.deck.id} recommendation={recommendation} rank={index + 1} />
         ))}
       </div>
 
@@ -83,9 +74,7 @@ function ResultContent() {
             onClick={() => setShowAll((prev) => !prev)}
             className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-center text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
           >
-            {showAll
-              ? "접기 ▲"
-              : `전체 순위 보기 (${results.length}개 덱) ▼`}
+            {showAll ? "접기 ▲" : `전체 순위 보기 (${results.length}개 덱) ▼`}
           </button>
 
           {showAll && (
@@ -104,13 +93,14 @@ function ResultContent() {
 
       {/* Action Buttons */}
       <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
+        <ShareButton shareText={shareText} />
         <Link href="/quiz">
           <Button variant="primary" size="lg">
             다시 하기 🔄
           </Button>
         </Link>
         <Link href="/">
-          <Button variant="secondary" size="lg">
+          <Button variant="ghost" size="lg">
             처음으로
           </Button>
         </Link>

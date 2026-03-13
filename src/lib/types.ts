@@ -36,9 +36,9 @@ export interface Deck {
   description: string;
   strengths: string[];
   weaknesses: string[];
-  matchups: string[];      // e.g. "어그로 덱에 강함", "컨트롤에 약함"
-  keyCards: string[];      // 핵심 카드 3~5장 (Korean names)
-  playTips: string[];      // 플레이 팁 2~3개
+  matchups: string[]; // e.g. "어그로 덱에 강함", "컨트롤에 약함"
+  keyCards: string[]; // 핵심 카드 3~5장 (Korean names)
+  playTips: string[]; // 플레이 팁 2~3개
   tags: string[];
 }
 
@@ -66,6 +66,7 @@ export interface ScoringWeights {
   tiers?: Partial<Record<Tier, number>>;
   difficulties?: Partial<Record<Difficulty, number>>;
   budgets?: Partial<Record<BudgetTier, number>>;
+}
 
 // ============================================================
 // Quiz State
