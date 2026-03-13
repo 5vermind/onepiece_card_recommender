@@ -49,7 +49,7 @@
     "name": "Marshall D. Teach",
     "nameKo": "마샬 D. 티치",
     "colors": ["Black"],
-    "life": 4,
+    "life": 5,
     "power": 5000,
     "set": "OP-09"
   },
@@ -67,7 +67,7 @@
     "name": "Jewelry Bonney",
     "nameKo": "쥬얼리 보니",
     "colors": ["Green"],
-    "life": 5,
+    "life": 4,
     "power": 5000,
     "set": "OP-07"
   },
@@ -103,7 +103,7 @@
     "name": "Shanks",
     "nameKo": "샹크스",
     "colors": ["Red"],
-    "life": 4,
+    "life": 5,
     "power": 5000,
     "set": "OP-09"
   },
@@ -121,7 +121,7 @@
     "name": "Nami",
     "nameKo": "나미",
     "colors": ["Blue", "Yellow"],
-    "life": 5,
+    "life": 4,
     "power": 5000,
     "set": "OP-11"
   },
@@ -139,7 +139,7 @@
     "name": "Katakuri",
     "nameKo": "카타쿠리",
     "colors": ["Purple"],
-    "life": 4,
+    "life": 5,
     "power": 5000,
     "set": "OP-11"
   },
