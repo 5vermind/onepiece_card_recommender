@@ -151,7 +151,7 @@
       },
       {
         "id": "q4-counter",
-        "text": "앤티 메타 — 유행 덱 카운터!",
+        "text": "안티 메타 — 유행 덱 카운터!",
         "icon": "🎯",
         "weights": { "tiers": { "A": 2, "B": 1 }, "playstyles": { "control": 1 } }
       },

@@ -1,9 +1,14 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
 import { type DeckRecommendation } from "@/lib/types";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
+
+function getLeaderImageUrl(leaderId: string): string {
+  return `https://en.onepiece-cardgame.com/images/cardlist/card/${leaderId}.png`;
+}
 
 interface DeckCardProps {
   recommendation: DeckRecommendation;
@@ -21,30 +26,57 @@ export function DeckCard({ recommendation, rank }: DeckCardProps) {
   const medal = rankMedals[rank];
   const isTopRank = rank === 1;
   const [expanded, setExpanded] = useState(false);
+  const [imgError, setImgError] = useState(false);
 
   return (
     <Card
       className={`relative overflow-hidden cursor-pointer transition-shadow hover:shadow-md ${isTopRank ? "border-op-red/40 shadow-lg ring-1 ring-op-red/20" : ""}`}
       onClick={() => setExpanded((prev) => !prev)}
     >
-      <div className="mb-3 flex items-center gap-2">
-        <span className={`text-2xl ${isTopRank ? "text-3xl" : ""}`}>{medal ?? `#${rank}`}</span>
-        <div className="flex-1">
-          <h3 className={`font-bold text-gray-900 ${isTopRank ? "text-lg" : "text-base"}`}>
-            {deck.nameKo}
-          </h3>
-          <p className="text-sm text-gray-500">{leader.nameKo}</p>
-        </div>
-        <div className="flex items-center gap-3">
-          <div className="text-right">
-            <span className="text-xs text-gray-400">매칭</span>
-            <p className="text-sm font-bold text-op-red">{score}점</p>
-          </div>
-          <span
-            className={`text-gray-400 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+      <div className="mb-3 flex items-start gap-3">
+        {!imgError ? (
+          <div
+            className={`relative shrink-0 overflow-hidden rounded-lg border border-gray-200 shadow-sm ${isTopRank ? "h-[100px] w-[72px]" : "h-[84px] w-[60px]"}`}
           >
-            ▼
-          </span>
+            <Image
+              src={getLeaderImageUrl(leader.id)}
+              alt={`${leader.nameKo} 리더 카드`}
+              fill
+              sizes={isTopRank ? "72px" : "60px"}
+              className="object-cover object-top"
+              onError={() => setImgError(true)}
+            />
+          </div>
+        ) : (
+          <div
+            className={`flex shrink-0 items-center justify-center rounded-lg border border-gray-200 bg-gray-100 text-2xl ${isTopRank ? "h-[100px] w-[72px]" : "h-[84px] w-[60px]"}`}
+          >
+            🏴‍☠️
+          </div>
+        )}
+        <div className="flex min-w-0 flex-1 flex-col gap-1">
+          <div className="flex items-center gap-2">
+            <span className={`text-2xl ${isTopRank ? "text-3xl" : ""}`}>{medal ?? `#${rank}`}</span>
+            <div className="min-w-0 flex-1">
+              <h3
+                className={`truncate font-bold text-gray-900 ${isTopRank ? "text-lg" : "text-base"}`}
+              >
+                {deck.nameKo}
+              </h3>
+              <p className="truncate text-sm text-gray-500">{leader.nameKo}</p>
+            </div>
+            <div className="flex shrink-0 items-center gap-3">
+              <div className="text-right">
+                <span className="text-xs text-gray-400">매칭</span>
+                <p className="text-sm font-bold text-op-red">{score}점</p>
+              </div>
+              <span
+                className={`text-gray-400 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}
+              >
+                ▼
+              </span>
+            </div>
+          </div>
         </div>
       </div>
 
