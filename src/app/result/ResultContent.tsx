@@ -1,10 +1,11 @@
 "use client";
 
-import { Suspense, useState, useMemo } from "react";
+import { Suspense, useState, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { parseAnswersParam } from "@/lib/answer-codec";
 import { recommendDecks } from "@/lib/recommend";
+import { trackEvent } from "@/lib/analytics";
 import { DeckCard } from "@/components/DeckCard";
 import { ShareButton } from "@/components/ShareButton";
 import { Button } from "@/components/ui/Button";
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/Button";
 function ResultInner() {
   const searchParams = useSearchParams();
   const [showAll, setShowAll] = useState(false);
+  const tracked = useRef(false);
 
   const { results, error } = useMemo(() => {
     const param = searchParams.get("a");
@@ -26,6 +28,20 @@ function ResultInner() {
 
     return { results: recommendDecks(answers), error: null };
   }, [searchParams]);
+
+  useEffect(() => {
+    if (!tracked.current && results && results.length > 0) {
+      tracked.current = true;
+      trackEvent({
+        name: "result_viewed",
+        data: {
+          top_deck: results[0].deck.nameKo,
+          top_score: results[0].score,
+          total: results.length,
+        },
+      });
+    }
+  }, [results]);
 
   if (error || !results) {
     return (
@@ -64,7 +80,10 @@ function ResultInner() {
         <div className="mt-8">
           <button
             type="button"
-            onClick={() => setShowAll((prev) => !prev)}
+            onClick={() => {
+              if (!showAll) trackEvent({ name: "show_all_clicked" });
+              setShowAll((prev) => !prev);
+            }}
             className="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-center text-sm font-medium text-gray-600 transition-colors hover:bg-gray-50"
           >
             {showAll ? "접기 ▲" : `전체 순위 보기 (${results.length}개 덱) ▼`}
@@ -86,7 +105,7 @@ function ResultInner() {
 
       <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         <ShareButton />
-        <Link href="/quiz">
+        <Link href="/quiz" onClick={() => trackEvent({ name: "retry_clicked" })}>
           <Button variant="primary" size="lg">
             다시 하기 🔄
           </Button>

@@ -1,8 +1,10 @@
 "use client";
 
+import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useQuizState } from "@/hooks/useQuizState";
 import { encodeAnswers } from "@/lib/answer-codec";
+import { trackEvent } from "@/lib/analytics";
 import { QuizStep } from "@/components/quiz/QuizStep";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/Button";
@@ -24,14 +26,28 @@ export default function QuizPage() {
   } = useQuizState();
 
   const isLastStep = currentStep === totalSteps - 1;
+  const tracked = useRef(false);
+
+  useEffect(() => {
+    if (!tracked.current) {
+      tracked.current = true;
+      trackEvent({ name: "quiz_started" });
+    }
+  }, []);
+
+  function handleSelectAnswer(questionId: string, optionId: string) {
+    selectAnswer(questionId, optionId);
+    trackEvent({
+      name: "quiz_answer",
+      data: { question: questionId, answer: optionId, step: currentStep },
+    });
+  }
 
   function handleNext() {
     if (isLastStep && canGoNext) {
-      // Mark complete and navigate to results
-      goToNextStep();
-    } else {
-      goToNextStep();
+      trackEvent({ name: "quiz_completed", data: { answers: JSON.stringify(answers) } });
     }
+    goToNextStep();
   }
 
   if (isComplete) {
@@ -55,7 +71,7 @@ export default function QuizPage() {
       <QuizStep
         question={currentQuestion}
         selectedOptionId={selectedOptionId}
-        onSelectOption={(optionId) => selectAnswer(currentQuestion.id, optionId)}
+        onSelectOption={(optionId) => handleSelectAnswer(currentQuestion.id, optionId)}
       />
 
       {/* Navigation Buttons */}

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { type DeckRecommendation } from "@/lib/types";
 import { Badge } from "@/components/ui/Badge";
 import { Card } from "@/components/ui/Card";
+import { trackEvent } from "@/lib/analytics";
 
 function getLeaderImageUrl(leaderId: string): string {
   return `https://en.onepiece-cardgame.com/images/cardlist/card/${leaderId}.png`;
@@ -31,7 +32,12 @@ export function DeckCard({ recommendation, rank }: DeckCardProps) {
   return (
     <Card
       className={`relative overflow-hidden cursor-pointer transition-shadow hover:shadow-md ${isTopRank ? "border-op-red/40 shadow-lg ring-1 ring-op-red/20" : ""}`}
-      onClick={() => setExpanded((prev) => !prev)}
+      onClick={() => {
+        if (!expanded) {
+          trackEvent({ name: "deck_expanded", data: { deck: deck.nameKo, rank } });
+        }
+        setExpanded((prev) => !prev);
+      }}
     >
       <div className="mb-3 flex items-start gap-3">
         {!imgError ? (
@@ -68,7 +74,7 @@ export function DeckCard({ recommendation, rank }: DeckCardProps) {
             <div className="flex shrink-0 items-center gap-3">
               <div className="text-right">
                 <span className="text-xs text-gray-400">매칭</span>
-                <p className="text-sm font-bold text-op-red">{score}점</p>
+                <p className="text-sm font-bold text-op-red">{score.toFixed(2)}점</p>
               </div>
               <span
                 className={`text-gray-400 transition-transform duration-200 ${expanded ? "rotate-180" : ""}`}

@@ -2,6 +2,7 @@
 
 import { useState, useCallback } from "react";
 import { Button } from "@/components/ui/Button";
+import { trackEvent } from "@/lib/analytics";
 
 type ShareState = "idle" | "copied" | "shared" | "error";
 
@@ -25,6 +26,7 @@ export function ShareButton() {
           url,
         });
         setState("shared");
+        trackEvent({ name: "share_clicked", data: { method: "native_share" } });
       } catch (err: unknown) {
         if (err instanceof DOMException && err.name === "AbortError") return;
         setState("error");
@@ -33,6 +35,7 @@ export function ShareButton() {
       try {
         await navigator.clipboard.writeText(url);
         setState("copied");
+        trackEvent({ name: "share_clicked", data: { method: "clipboard_copy" } });
       } catch {
         setState("error");
       }

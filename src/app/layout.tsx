@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Script from "next/script";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -37,6 +39,15 @@ export default function RootLayout({
           <p>원피스 카드 게임 덱 추천 · OP-11 메타 기준</p>
           <p className="mt-1">비공식 팬 프로젝트 · 반다이 남코와 무관합니다</p>
         </footer>
+
+        <Analytics />
+        {process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID && (
+          <Script
+            src="https://cloud.umami.is/script.js"
+            data-website-id={process.env.NEXT_PUBLIC_UMAMI_WEBSITE_ID}
+            strategy="afterInteractive"
+          />
+        )}
       </body>
     </html>
   );
