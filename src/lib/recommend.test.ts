@@ -36,9 +36,9 @@ function makeCasualMidrangeAnswers(): Record<string, string> {
 }
 
 describe("recommendDecks", () => {
-  it("should return all 19 decks in the full ranking", () => {
+  it("should return all 20 decks in the full ranking", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
-    expect(results).toHaveLength(19);
+    expect(results).toHaveLength(20);
   });
 
   it("should rank aggro decks highest for aggro preference", () => {
@@ -119,7 +119,7 @@ describe("recommendDecks", () => {
     const experiencedAnswers = makeControlExperiencedAnswers();
     const results = recommendDecks(experiencedAnswers);
 
-    expect(results.length).toBe(19);
+    expect(results.length).toBe(20);
     expect(results[0].score).toBeGreaterThan(0);
   });
 });

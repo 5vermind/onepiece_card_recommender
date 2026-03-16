@@ -22,8 +22,10 @@ const CATEGORY_MULTIPLIERS = {
  * 1.0 = full normalization (dual-attr deck gets 50% per attribute)
  * 0.0 = no normalization (dual-attr deck gets 100%, old behavior)
  * 0.8 = soft normalization (dual-attr deck gets ~55.6%)
+ * 0.7 = softer normalization (dual-attr deck gets ~58.8%)
+ * 0.6 = light normalization (dual-attr deck gets ~62.5%)
  */
-const MULTI_ATTR_NORMALIZATION = 0.8;
+const MULTI_ATTR_NORMALIZATION = 0.6;
 
 /**
  * Merge all selected options' weights into a single AggregatedWeights object.

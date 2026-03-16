@@ -265,7 +265,7 @@ describe("calculateDeckScore", () => {
     const multiScore = calculateDeckScore(multiDeck, weights, EMPTY_ANSWERS);
     const singleScore = calculateDeckScore(singleDeck, weights, EMPTY_ANSWERS);
     expect(multiScore).toBeGreaterThan(singleScore);
-    expect(multiScore / singleScore).toBeLessThan(1.2);
+    expect(multiScore / singleScore).toBeLessThan(1.3);
   });
 
   it("should give focused single-attribute deck higher score when only one attribute matches", () => {

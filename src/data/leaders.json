@@ -169,5 +169,14 @@
     "life": 4,
     "power": 5000,
     "set": "OP-05"
+  },
+  {
+    "id": "OP05-022",
+    "name": "Donquixote Rosinante",
+    "nameKo": "돈키호테 로시난테",
+    "colors": ["Green", "Blue"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-05"
   }
 ]
