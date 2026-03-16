@@ -160,5 +160,14 @@
     "life": 4,
     "power": 5000,
     "set": "OP-06"
+  },
+  {
+    "id": "OP05-098",
+    "name": "Enel",
+    "nameKo": "에넬",
+    "colors": ["Yellow"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-05"
   }
 ]

@@ -65,37 +65,37 @@
     "options": [
       {
         "id": "q3-red",
-        "text": "레드 — 정열적인 공격",
+        "text": "레드 — 높은 파워로 밀어붙이기",
         "icon": "🔴",
         "weights": { "colors": { "Red": 3 } }
       },
       {
         "id": "q3-green",
-        "text": "그린 — 성장과 버프",
+        "text": "그린 — 상대를 묶고 견고한 수비",
         "icon": "🟢",
         "weights": { "colors": { "Green": 3 } }
       },
       {
         "id": "q3-blue",
-        "text": "블루 — 전략적 컨트롤",
+        "text": "블루 — 되돌리기로 주도권 장악",
         "icon": "🔵",
         "weights": { "colors": { "Blue": 3 } }
       },
       {
         "id": "q3-purple",
-        "text": "퍼플 — 트리키한 플레이",
+        "text": "퍼플 — 빠른 가속과 대형 전개",
         "icon": "🟣",
         "weights": { "colors": { "Purple": 3 } }
       },
       {
         "id": "q3-black",
-        "text": "블랙 — 상대 방해와 제거",
+        "text": "블랙 — 상대 약화와 제거",
         "icon": "⚫",
         "weights": { "colors": { "Black": 3 } }
       },
       {
         "id": "q3-yellow",
-        "text": "옐로 — 트리거와 방어",
+        "text": "옐로 — 라이프 트리거로 역전",
         "icon": "🟡",
         "weights": { "colors": { "Yellow": 3 } }
       },
