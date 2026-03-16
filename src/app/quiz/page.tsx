@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useQuizState } from "@/hooks/useQuizState";
 import { encodeAnswers } from "@/lib/answer-codec";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, SCORING_VERSION } from "@/lib/analytics";
 import { QuizStep } from "@/components/quiz/QuizStep";
 import { ProgressBar } from "@/components/ui/ProgressBar";
 import { Button } from "@/components/ui/Button";
@@ -45,7 +45,10 @@ export default function QuizPage() {
 
   function handleNext() {
     if (isLastStep && canGoNext) {
-      trackEvent({ name: "quiz_completed", data: { answers: JSON.stringify(answers) } });
+      trackEvent({
+        name: "quiz_completed",
+        data: { answers: JSON.stringify(answers), sv: SCORING_VERSION },
+      });
     }
     goToNextStep();
   }

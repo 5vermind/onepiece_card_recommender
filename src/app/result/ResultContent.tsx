@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { parseAnswersParam } from "@/lib/answer-codec";
 import { recommendDecks } from "@/lib/recommend";
-import { trackEvent } from "@/lib/analytics";
+import { trackEvent, SCORING_VERSION } from "@/lib/analytics";
 import { DeckCard } from "@/components/DeckCard";
 import { ShareButton } from "@/components/ShareButton";
 import { Button } from "@/components/ui/Button";
@@ -38,6 +38,7 @@ function ResultInner() {
           top_deck: results[0].deck.nameKo,
           top_score: results[0].score,
           total: results.length,
+          sv: SCORING_VERSION,
         },
       });
     }

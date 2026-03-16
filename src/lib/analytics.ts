@@ -14,11 +14,16 @@ declare global {
   }
 }
 
+export const SCORING_VERSION = "v1.2";
+
 type AnalyticsEvent =
   | { name: "quiz_started" }
   | { name: "quiz_answer"; data: { question: string; answer: string; step: number } }
-  | { name: "quiz_completed"; data: { answers: string } }
-  | { name: "result_viewed"; data: { top_deck: string; top_score: number; total: number } }
+  | { name: "quiz_completed"; data: { answers: string; sv: string } }
+  | {
+      name: "result_viewed";
+      data: { top_deck: string; top_score: number; total: number; sv: string };
+    }
   | { name: "deck_expanded"; data: { deck: string; rank: number } }
   | { name: "share_clicked"; data: { method: string } }
   | { name: "retry_clicked" }
