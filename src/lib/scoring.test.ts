@@ -243,7 +243,7 @@ describe("calculateDeckScore", () => {
     expect(score).toBe(0);
   });
 
-  it("should normalize multi-color and multi-playstyle deck scores by attribute count", () => {
+  it("should give multi-attribute deck a slight advantage when all attributes match", () => {
     const weights = makeZeroWeights();
     weights.colors.Blue = 2;
     weights.colors.Purple = 2;
@@ -262,9 +262,10 @@ describe("calculateDeckScore", () => {
       playstyle: ["midrange"],
     };
 
-    expect(calculateDeckScore(multiDeck, weights, EMPTY_ANSWERS)).toBe(
-      calculateDeckScore(singleDeck, weights, EMPTY_ANSWERS),
-    );
+    const multiScore = calculateDeckScore(multiDeck, weights, EMPTY_ANSWERS);
+    const singleScore = calculateDeckScore(singleDeck, weights, EMPTY_ANSWERS);
+    expect(multiScore).toBeGreaterThan(singleScore);
+    expect(multiScore / singleScore).toBeLessThan(1.2);
   });
 
   it("should give focused single-attribute deck higher score when only one attribute matches", () => {

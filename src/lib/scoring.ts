@@ -18,6 +18,14 @@ const CATEGORY_MULTIPLIERS = {
 } as const;
 
 /**
+ * Multi-attribute normalization strength.
+ * 1.0 = full normalization (dual-attr deck gets 50% per attribute)
+ * 0.0 = no normalization (dual-attr deck gets 100%, old behavior)
+ * 0.8 = soft normalization (dual-attr deck gets ~55.6%)
+ */
+const MULTI_ATTR_NORMALIZATION = 0.8;
+
+/**
  * Merge all selected options' weights into a single AggregatedWeights object.
  */
 export function aggregateWeights(
@@ -79,12 +87,14 @@ export function calculateDeckScore(
   weights: AggregatedWeights,
   answers: Record<string, string>,
 ): number {
+  const colorDivisor = 1 + (deck.colors.length - 1) * MULTI_ATTR_NORMALIZATION;
   const colorScore =
-    deck.colors.reduce((sum, color) => sum + (weights.colors[color] ?? 0), 0) / deck.colors.length;
+    deck.colors.reduce((sum, color) => sum + (weights.colors[color] ?? 0), 0) / colorDivisor;
 
+  const playstyleDivisor = 1 + (deck.playstyle.length - 1) * MULTI_ATTR_NORMALIZATION;
   const playstyleScore =
     deck.playstyle.reduce((sum, style) => sum + (weights.playstyles[style] ?? 0), 0) /
-    deck.playstyle.length;
+    playstyleDivisor;
 
   const tierScore = weights.tiers[deck.tier] ?? 0;
   const difficultyScore = weights.difficulties[deck.difficulty] ?? 0;

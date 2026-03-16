@@ -4,7 +4,7 @@ import questionsData from "@/data/questions.json";
 const allQuestions = questionsData as QuizQuestion[];
 
 /** Total number of quiz slots (0–6). */
-export const TOTAL_SLOTS = 7;
+export const TOTAL_SLOTS = 6;
 
 /**
  * Given all questions and the user's current answers, resolve which question

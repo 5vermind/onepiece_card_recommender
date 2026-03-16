@@ -40,7 +40,6 @@ describe("resolveQuestions", () => {
     expect(beginnerResolved[2].id).toBe(experiencedResolved[2].id);
     expect(beginnerResolved[4].id).toBe(experiencedResolved[4].id);
     expect(beginnerResolved[5].id).toBe(experiencedResolved[5].id);
-    expect(beginnerResolved[6].id).toBe(experiencedResolved[6].id);
   });
 
   it("should assign unique slots to each resolved question", () => {

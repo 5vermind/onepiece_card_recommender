@@ -10,7 +10,6 @@ function makeAggroBeginnerAnswers(): Record<string, string> {
     "q4-tempo": "q4-fast",
     "q5-goal": "q5-competitive",
     "q6-budget": "q6-mid",
-    "q7-character": "q7-luffy",
   };
 }
 
@@ -22,7 +21,6 @@ function makeControlExperiencedAnswers(): Record<string, string> {
     "q4-meta": "q4-counter",
     "q5-goal": "q5-competitive",
     "q6-budget": "q6-high",
-    "q7-character": "q7-villain",
   };
 }
 
@@ -34,7 +32,6 @@ function makeCasualMidrangeAnswers(): Record<string, string> {
     "q4-tempo": "q4-medium",
     "q5-goal": "q5-casual",
     "q6-budget": "q6-mid",
-    "q7-character": "q7-supernova",
   };
 }
 
