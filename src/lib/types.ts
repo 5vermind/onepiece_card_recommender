@@ -52,6 +52,7 @@ export interface QuizQuestion {
   text: string;
   description: string;
   options: QuizOption[];
+  maxSelect?: number;
   condition?: Record<string, string[]>;
 }
 
