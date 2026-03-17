@@ -43,37 +43,39 @@ export function aggregateWeights(
   };
 
   for (const question of questions) {
-    const selectedOptionId = answers[question.id];
-    if (!selectedOptionId) continue;
+    const selectedOptionIds = answers[question.id]?.split("|").filter(Boolean) ?? [];
+    if (selectedOptionIds.length === 0) continue;
 
-    const option = question.options.find((o) => o.id === selectedOptionId);
-    if (!option) continue;
+    for (const selectedOptionId of selectedOptionIds) {
+      const option = question.options.find((o) => o.id === selectedOptionId);
+      if (!option) continue;
 
-    const w = option.weights;
+      const w = option.weights;
 
-    if (w.colors) {
-      for (const [k, v] of Object.entries(w.colors)) {
-        result.colors[k as Color] += v;
+      if (w.colors) {
+        for (const [k, v] of Object.entries(w.colors)) {
+          result.colors[k as Color] += v;
+        }
       }
-    }
-    if (w.playstyles) {
-      for (const [k, v] of Object.entries(w.playstyles)) {
-        result.playstyles[k as Playstyle] += v;
+      if (w.playstyles) {
+        for (const [k, v] of Object.entries(w.playstyles)) {
+          result.playstyles[k as Playstyle] += v;
+        }
       }
-    }
-    if (w.tiers) {
-      for (const [k, v] of Object.entries(w.tiers)) {
-        result.tiers[k as Tier] += v;
+      if (w.tiers) {
+        for (const [k, v] of Object.entries(w.tiers)) {
+          result.tiers[k as Tier] += v;
+        }
       }
-    }
-    if (w.difficulties) {
-      for (const [k, v] of Object.entries(w.difficulties)) {
-        result.difficulties[k as Difficulty] += v;
+      if (w.difficulties) {
+        for (const [k, v] of Object.entries(w.difficulties)) {
+          result.difficulties[k as Difficulty] += v;
+        }
       }
-    }
-    if (w.budgets) {
-      for (const [k, v] of Object.entries(w.budgets)) {
-        result.budgets[k as BudgetTier] += v;
+      if (w.budgets) {
+        for (const [k, v] of Object.entries(w.budgets)) {
+          result.budgets[k as BudgetTier] += v;
+        }
       }
     }
   }

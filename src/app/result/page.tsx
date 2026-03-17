@@ -29,7 +29,7 @@ export async function generateMetadata({ searchParams }: Props): Promise<Metadat
     description = `나의 원피스 카드 게임 추천 덱: ${names}. 퀴즈를 풀고 나에게 맞는 덱을 찾아보세요!`;
   }
 
-  const ogImageUrl = `/api/og?a=${param}`;
+  const ogImageUrl = `/api/og?a=${encodeURIComponent(param)}`;
 
   return {
     title,

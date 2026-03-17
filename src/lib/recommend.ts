@@ -47,6 +47,14 @@ export function recommendDecks(answers: Record<string, string>): DeckRecommendat
  */
 export function generateMatchReasons(deck: Deck, weights: AggregatedWeights): string[] {
   const reasons: string[] = [];
+  const colorLabels: Record<Color, string> = {
+    Red: "레드",
+    Green: "그린",
+    Blue: "블루",
+    Purple: "퍼플",
+    Black: "블랙",
+    Yellow: "옐로",
+  };
 
   // Playstyle match
   const topPlaystyle = getTopKey(weights.playstyles);
@@ -61,17 +69,11 @@ export function generateMatchReasons(deck: Deck, weights: AggregatedWeights): st
   }
 
   // Color match
-  const topColor = getTopKey(weights.colors);
-  if (topColor && deck.colors.includes(topColor)) {
-    const labels: Record<Color, string> = {
-      Red: "레드",
-      Green: "그린",
-      Blue: "블루",
-      Purple: "퍼플",
-      Black: "블랙",
-      Yellow: "옐로",
-    };
-    reasons.push(`선호하시는 ${labels[topColor]} 색상의 덱이에요!`);
+  const preferredColors = getTopKeys(weights.colors).filter((color) => deck.colors.includes(color));
+  if (preferredColors.length > 0) {
+    reasons.push(
+      `선호하시는 ${preferredColors.map((color) => colorLabels[color]).join(" / ")} 색상의 덱이에요!`,
+    );
   }
 
   // Tier match
@@ -114,4 +116,14 @@ function getTopKey<T extends string>(record: Record<T, number>): T | null {
     }
   }
   return maxKey;
+}
+
+function getTopKeys<T extends string>(record: Record<T, number>): T[] {
+  const topKey = getTopKey(record);
+  if (!topKey) return [];
+
+  const topValue = record[topKey];
+  return (Object.entries(record) as [T, number][])
+    .filter(([, value]) => value === topValue && value > 0)
+    .map(([key]) => key);
 }

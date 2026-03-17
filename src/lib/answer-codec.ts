@@ -1,15 +1,7 @@
 import { resolveQuestions, resolveQuestionForSlot, TOTAL_SLOTS } from "@/lib/quiz-flow";
 
 export function encodeAnswers(answers: Record<string, string>): string {
-  const resolved = resolveQuestions(answers);
-
-  return resolved
-    .map((q) => {
-      const selectedId = answers[q.id];
-      const idx = q.options.findIndex((o) => o.id === selectedId);
-      return idx >= 0 ? String(idx) : "0";
-    })
-    .join("");
+  return encodeURIComponent(JSON.stringify(answers));
 }
 
 export function decodeAnswers(compact: string): Record<string, string> | null {
