@@ -65,6 +65,20 @@ describe("recommendDecks", () => {
     expect(redCount).toBeGreaterThanOrEqual(1);
   });
 
+  it("should prioritize decks matching either of two selected colors", () => {
+    const answers = {
+      ...makeAggroBeginnerAnswers(),
+      "q3-color": "q3-red|q3-yellow",
+    };
+    const results = recommendDecks(answers);
+    const top3 = results.slice(0, 3);
+
+    const matchingColorCount = top3.filter(
+      (r) => r.deck.colors.includes("Red") || r.deck.colors.includes("Yellow"),
+    ).length;
+    expect(matchingColorCount).toBeGreaterThanOrEqual(2);
+  });
+
   it("should prioritize S/A tier decks for competitive goal", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
     const top3 = results.slice(0, 3);
@@ -181,6 +195,23 @@ describe("generateMatchReasons", () => {
 
     const reasons = generateMatchReasons(deck, weights);
     expect(reasons.some((r) => r.includes("레드"))).toBe(true);
+  });
+
+  it("should mention multiple preferred colors when a deck matches tied top colors", () => {
+    const weights: AggregatedWeights = {
+      ...ZERO_WEIGHTS,
+      colors: { Red: 3, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 3 },
+    };
+    const deck = {
+      ...MOCK_DECK_BASE,
+      colors: ["Red" as const, "Yellow" as const],
+      playstyle: ["aggro" as const],
+      tier: "B" as const,
+      difficulty: "easy" as const,
+    };
+
+    const reasons = generateMatchReasons(deck, weights);
+    expect(reasons.some((r) => r.includes("레드 / 옐로"))).toBe(true);
   });
 
   it("should return at most 3 reasons", () => {

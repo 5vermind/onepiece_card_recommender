@@ -124,6 +124,14 @@ describe("aggregateWeights", () => {
     expect(result.tiers.A).toBe(1);
   });
 
+  it("should accumulate weights from two selected colors", () => {
+    const answers = { q3: "q3-red|q3-blue" };
+    const result = aggregateWeights(answers, mockQuestions);
+
+    expect(result.colors.Red).toBe(3);
+    expect(result.colors.Blue).toBe(3);
+  });
+
   it("should handle empty answers gracefully", () => {
     const result = aggregateWeights({}, mockQuestions);
 
