@@ -17,6 +17,7 @@ export default function QuizPage() {
     currentQuestion,
     answers,
     selectedOptionId,
+    selectedOptionIds,
     isComplete,
     selectAnswer,
     goToNextStep,
@@ -37,9 +38,31 @@ export default function QuizPage() {
 
   function handleSelectAnswer(questionId: string, optionId: string) {
     selectAnswer(questionId, optionId);
+
+    const answer =
+      questionId === "q3-color"
+        ? (() => {
+            const current = selectedOptionIds.filter((value) => value !== "q3-any");
+
+            if (optionId === "q3-any") {
+              return "q3-any";
+            }
+
+            if (current.includes(optionId)) {
+              return current.filter((value) => value !== optionId).join("|");
+            }
+
+            if (current.length >= 2) {
+              return current.join("|");
+            }
+
+            return [...current, optionId].join("|");
+          })()
+        : optionId;
+
     trackEvent({
       name: "quiz_answer",
-      data: { question: questionId, answer: optionId, step: currentStep },
+      data: { question: questionId, answer, step: currentStep },
     });
   }
 
@@ -74,6 +97,7 @@ export default function QuizPage() {
       <QuizStep
         question={currentQuestion}
         selectedOptionId={selectedOptionId}
+        selectedOptionIds={selectedOptionIds}
         onSelectOption={(optionId) => handleSelectAnswer(currentQuestion.id, optionId)}
       />
 

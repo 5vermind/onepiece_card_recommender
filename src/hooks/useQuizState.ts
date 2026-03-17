@@ -4,12 +4,16 @@ import { useState, useCallback, useMemo } from "react";
 import { type QuizQuestion } from "@/lib/types";
 import { resolveQuestions, TOTAL_SLOTS } from "@/lib/quiz-flow";
 
+const COLOR_QUESTION_ID = "q3-color";
+const ANY_COLOR_OPTION_ID = "q3-any";
+
 interface UseQuizStateReturn {
   currentStep: number;
   totalSteps: number;
   currentQuestion: QuizQuestion;
   answers: Record<string, string>;
   selectedOptionId: string | null;
+  selectedOptionIds: string[];
   isComplete: boolean;
   progress: number;
   selectAnswer: (questionId: string, optionId: string) => void;
@@ -39,6 +43,11 @@ export function useQuizState(): UseQuizStateReturn {
     [answers, currentQuestion.id],
   );
 
+  const selectedOptionIds = useMemo(
+    () => (selectedOptionId ? selectedOptionId.split("|") : []),
+    [selectedOptionId],
+  );
+
   const progress = useMemo(
     () => ((currentStep + (selectedOptionId !== null ? 1 : 0)) / totalSteps) * 100,
     [currentStep, selectedOptionId, totalSteps],
@@ -49,7 +58,33 @@ export function useQuizState(): UseQuizStateReturn {
 
   const selectAnswer = useCallback((questionId: string, optionId: string) => {
     setAnswers((prev) => {
-      const next = { ...prev, [questionId]: optionId };
+      const next = { ...prev };
+
+      if (questionId === COLOR_QUESTION_ID) {
+        const current = prev[questionId]?.split("|").filter(Boolean) ?? [];
+
+        if (optionId === ANY_COLOR_OPTION_ID) {
+          next[questionId] = ANY_COLOR_OPTION_ID;
+        } else {
+          const withoutAny = current.filter((value) => value !== ANY_COLOR_OPTION_ID);
+
+          if (withoutAny.includes(optionId)) {
+            const toggled = withoutAny.filter((value) => value !== optionId);
+
+            if (toggled.length > 0) {
+              next[questionId] = toggled.join("|");
+            } else {
+              delete next[questionId];
+            }
+          } else if (withoutAny.length < 2) {
+            next[questionId] = [...withoutAny, optionId].join("|");
+          } else {
+            next[questionId] = withoutAny.join("|");
+          }
+        }
+      } else {
+        next[questionId] = optionId;
+      }
 
       const prevResolved = resolveQuestions(prev);
       const nextResolved = resolveQuestions(next);
@@ -94,6 +129,7 @@ export function useQuizState(): UseQuizStateReturn {
     currentQuestion,
     answers,
     selectedOptionId,
+    selectedOptionIds,
     isComplete,
     progress,
     selectAnswer,
