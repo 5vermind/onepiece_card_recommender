@@ -8,7 +8,7 @@ export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "http://localhost:3000"),
   title: "원피스 카드 게임 덱 추천",
   description:
-    "5개 질문에 답하면 당신에게 딱 맞는 원피스 카드 게임 덱을 추천해 드려요! OP-11 최신 메타 반영.",
+    "5개 질문에 답하면 당신에게 딱 맞는 원피스 카드 게임 덱을 추천해 드려요! OP-12 최신 메타 반영.",
   openGraph: {
     title: "원피스 카드 게임 덱 추천",
     description: "5개 질문에 답하면 당신에게 딱 맞는 원피스 카드 게임 덱을 추천해 드려요!",
@@ -36,7 +36,7 @@ export default function RootLayout({
         <main className="flex-1">{children}</main>
 
         <footer className="border-t border-gray-200 bg-white py-4 text-center text-xs text-gray-400">
-          <p>원피스 카드 게임 덱 추천 · OP-11 메타 기준</p>
+          <p>원피스 카드 게임 덱 추천 · OP-12 메타 기준</p>
           <p className="mt-1">비공식 팬 프로젝트 · 반다이 남코와 무관합니다</p>
         </footer>
 

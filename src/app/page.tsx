@@ -37,7 +37,7 @@ export default function Home() {
         />
         <FeatureItem
           icon="🔥"
-          title="OP-11 최신 메타"
+          title="OP-12 최신 메타"
           description="11탄까지의 최신 카드와 메타를 반영했어요"
         />
       </section>

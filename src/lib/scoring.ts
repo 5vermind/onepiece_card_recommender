@@ -12,9 +12,9 @@ import {
 const CATEGORY_MULTIPLIERS = {
   color: 1.0,
   playstyle: 1.5,
-  tier: 1.3,
+  tier: 1.15,
   difficulty: 0.8,
-  budget: 0.6,
+  budget: 0.7,
 } as const;
 
 /**

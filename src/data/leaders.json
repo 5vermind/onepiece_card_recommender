@@ -178,5 +178,68 @@
     "life": 4,
     "power": 5000,
     "set": "OP-05"
+  },
+  {
+    "id": "OP12-001",
+    "name": "Silvers Rayleigh",
+    "nameKo": "실버즈 레일리",
+    "colors": ["Red"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-12"
+  },
+  {
+    "id": "OP12-020",
+    "name": "Roronoa Zoro",
+    "nameKo": "로로노아 조로",
+    "colors": ["Green"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-12"
+  },
+  {
+    "id": "OP12-040",
+    "name": "Kuzan",
+    "nameKo": "쿠잔",
+    "colors": ["Blue"],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-12"
+  },
+  {
+    "id": "OP12-041",
+    "name": "Sanji",
+    "nameKo": "상디",
+    "colors": ["Blue", "Purple"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-12"
+  },
+  {
+    "id": "OP12-061",
+    "name": "Donquixote Rosinante",
+    "nameKo": "돈키호테 로시난테",
+    "colors": ["Purple", "Yellow"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-12"
+  },
+  {
+    "id": "OP12-081",
+    "name": "Koala",
+    "nameKo": "코알라",
+    "colors": ["Black", "Yellow"],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-12"
+  },
+  {
+    "id": "ST12-001",
+    "name": "Roronoa Zoro & Sanji",
+    "nameKo": "로로노아 조로 & 상디",
+    "colors": ["Green", "Blue"],
+    "life": 4,
+    "power": 5000,
+    "set": "ST-12"
   }
 ]

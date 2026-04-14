@@ -128,7 +128,7 @@ export async function GET(request: NextRequest) {
         }}
       >
         <span>원피스 카드 게임 덱 추천</span>
-        <span>OP-11 메타 기준</span>
+        <span>OP-12 메타 기준</span>
       </div>
     </div>,
     {
