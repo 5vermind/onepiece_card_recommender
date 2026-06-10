@@ -923,7 +923,7 @@
     "playstyle": ["control", "combo"],
     "tier": "S",
     "difficulty": "hard",
-    "budgetTier": "expensive",
+    "budgetTier": "mid",
     "keyMechanic": "시작 스테이지 → 트래시 세팅 → 오로성 5면 전개",
     "description": "OP13 흑 이무는 오로성과 허의 옥좌을 축으로 OP13 환경을 재정의한 S티어 컨트롤/콤보 덱입니다. 게임 시작 시 마리조아 스테이지를 세팅하고, 트래시에 서로 다른 오로성 5종을 준비한 뒤 OP13-082 오로성으로 7000 파워급 캐릭터 5면을 한 번에 전개해 공격과 방어를 동시에 압도합니다.",
     "strengths": [
