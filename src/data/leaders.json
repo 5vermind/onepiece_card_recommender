@@ -3,7 +3,10 @@
     "id": "OP11-040",
     "name": "Monkey D. Luffy",
     "nameKo": "몽키 D. 루피",
-    "colors": ["Blue", "Purple"],
+    "colors": [
+      "Blue",
+      "Purple"
+    ],
     "life": 3,
     "power": 6000,
     "set": "OP-11"
@@ -12,7 +15,10 @@
     "id": "EB02-010",
     "name": "Monkey D. Luffy",
     "nameKo": "몽키 D. 루피",
-    "colors": ["Green", "Purple"],
+    "colors": [
+      "Green",
+      "Purple"
+    ],
     "life": 4,
     "power": 5000,
     "set": "EB-02"
@@ -21,7 +27,9 @@
     "id": "OP05-060",
     "name": "Monkey D. Luffy",
     "nameKo": "몽키 D. 루피",
-    "colors": ["Purple"],
+    "colors": [
+      "Purple"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-05"
@@ -30,7 +38,10 @@
     "id": "OP05-002",
     "name": "Belo Betty",
     "nameKo": "벨로 베티",
-    "colors": ["Red", "Yellow"],
+    "colors": [
+      "Red",
+      "Yellow"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-05"
@@ -39,7 +50,9 @@
     "id": "OP01-001",
     "name": "Roronoa Zoro",
     "nameKo": "로로노아 조로",
-    "colors": ["Red"],
+    "colors": [
+      "Red"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-01"
@@ -48,7 +61,9 @@
     "id": "OP09-081",
     "name": "Marshall D. Teach",
     "nameKo": "마샬 D. 티치",
-    "colors": ["Black"],
+    "colors": [
+      "Black"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-09"
@@ -57,7 +72,9 @@
     "id": "OP07-079",
     "name": "Rob Lucci",
     "nameKo": "롭 루치",
-    "colors": ["Black"],
+    "colors": [
+      "Black"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-07"
@@ -66,7 +83,9 @@
     "id": "OP07-019",
     "name": "Jewelry Bonney",
     "nameKo": "쥬얼리 보니",
-    "colors": ["Green"],
+    "colors": [
+      "Green"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-07"
@@ -75,7 +94,10 @@
     "id": "OP10-001",
     "name": "Smoker",
     "nameKo": "스모커",
-    "colors": ["Red", "Green"],
+    "colors": [
+      "Red",
+      "Green"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-10"
@@ -84,7 +106,10 @@
     "id": "OP06-022",
     "name": "Yamato",
     "nameKo": "야마토",
-    "colors": ["Green", "Yellow"],
+    "colors": [
+      "Green",
+      "Yellow"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-06"
@@ -93,7 +118,9 @@
     "id": "OP09-042",
     "name": "Buggy",
     "nameKo": "버기",
-    "colors": ["Blue"],
+    "colors": [
+      "Blue"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-09"
@@ -102,7 +129,9 @@
     "id": "OP09-001",
     "name": "Shanks",
     "nameKo": "샹크스",
-    "colors": ["Red"],
+    "colors": [
+      "Red"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-09"
@@ -111,7 +140,10 @@
     "id": "OP10-022",
     "name": "Trafalgar Law",
     "nameKo": "트라팔가 로",
-    "colors": ["Green", "Yellow"],
+    "colors": [
+      "Green",
+      "Yellow"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-10"
@@ -120,7 +152,10 @@
     "id": "OP11-041",
     "name": "Nami",
     "nameKo": "나미",
-    "colors": ["Blue", "Yellow"],
+    "colors": [
+      "Blue",
+      "Yellow"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-11"
@@ -129,7 +164,10 @@
     "id": "OP09-061",
     "name": "Monkey D. Luffy",
     "nameKo": "몽키 D. 루피",
-    "colors": ["Purple", "Black"],
+    "colors": [
+      "Purple",
+      "Black"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-09"
@@ -138,7 +176,9 @@
     "id": "OP11-062",
     "name": "Katakuri",
     "nameKo": "카타쿠리",
-    "colors": ["Purple"],
+    "colors": [
+      "Purple"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-11"
@@ -147,7 +187,10 @@
     "id": "OP08-002",
     "name": "Marco",
     "nameKo": "마르코",
-    "colors": ["Red", "Blue"],
+    "colors": [
+      "Red",
+      "Blue"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-08"
@@ -156,7 +199,10 @@
     "id": "OP06-042",
     "name": "Vinsmoke Reiju",
     "nameKo": "빈스모크 레이쥬",
-    "colors": ["Blue", "Purple"],
+    "colors": [
+      "Blue",
+      "Purple"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-06"
@@ -165,7 +211,9 @@
     "id": "OP05-098",
     "name": "Enel",
     "nameKo": "에넬",
-    "colors": ["Yellow"],
+    "colors": [
+      "Yellow"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-05"
@@ -174,7 +222,10 @@
     "id": "OP05-022",
     "name": "Donquixote Rosinante",
     "nameKo": "돈키호테 로시난테",
-    "colors": ["Green", "Blue"],
+    "colors": [
+      "Green",
+      "Blue"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-05"
@@ -183,7 +234,9 @@
     "id": "OP12-001",
     "name": "Silvers Rayleigh",
     "nameKo": "실버즈 레일리",
-    "colors": ["Red"],
+    "colors": [
+      "Red"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-12"
@@ -192,7 +245,9 @@
     "id": "OP12-020",
     "name": "Roronoa Zoro",
     "nameKo": "로로노아 조로",
-    "colors": ["Green"],
+    "colors": [
+      "Green"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-12"
@@ -201,7 +256,9 @@
     "id": "OP12-040",
     "name": "Kuzan",
     "nameKo": "쿠잔",
-    "colors": ["Blue"],
+    "colors": [
+      "Blue"
+    ],
     "life": 5,
     "power": 5000,
     "set": "OP-12"
@@ -210,7 +267,10 @@
     "id": "OP12-041",
     "name": "Sanji",
     "nameKo": "상디",
-    "colors": ["Blue", "Purple"],
+    "colors": [
+      "Blue",
+      "Purple"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-12"
@@ -219,7 +279,10 @@
     "id": "OP12-061",
     "name": "Donquixote Rosinante",
     "nameKo": "돈키호테 로시난테",
-    "colors": ["Purple", "Yellow"],
+    "colors": [
+      "Purple",
+      "Yellow"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-12"
@@ -228,7 +291,10 @@
     "id": "OP12-081",
     "name": "Koala",
     "nameKo": "코알라",
-    "colors": ["Black", "Yellow"],
+    "colors": [
+      "Black",
+      "Yellow"
+    ],
     "life": 4,
     "power": 5000,
     "set": "OP-12"
@@ -237,9 +303,94 @@
     "id": "ST12-001",
     "name": "Roronoa Zoro & Sanji",
     "nameKo": "로로노아 조로 & 상디",
-    "colors": ["Green", "Blue"],
+    "colors": [
+      "Green",
+      "Blue"
+    ],
     "life": 4,
     "power": 5000,
     "set": "ST-12"
+  },
+  {
+    "id": "OP13-079",
+    "name": "Imu",
+    "nameKo": "이무",
+    "colors": [
+      "Black"
+    ],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-13"
+  },
+  {
+    "id": "OP13-002",
+    "name": "Portgas.D.Ace",
+    "nameKo": "포트거스 D. 에이스",
+    "colors": [
+      "Red",
+      "Blue"
+    ],
+    "life": 3,
+    "power": 6000,
+    "set": "OP-13"
+  },
+  {
+    "id": "OP13-003",
+    "name": "Gol.D.Roger",
+    "nameKo": "골 D. 로저",
+    "colors": [
+      "Red",
+      "Purple"
+    ],
+    "life": 5,
+    "power": 7000,
+    "set": "OP-13"
+  },
+  {
+    "id": "OP13-004",
+    "name": "Sabo",
+    "nameKo": "사보",
+    "colors": [
+      "Red",
+      "Black"
+    ],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-13"
+  },
+  {
+    "id": "OP09-022",
+    "name": "Lim",
+    "nameKo": "림",
+    "colors": [
+      "Green",
+      "Purple"
+    ],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-09"
+  },
+  {
+    "id": "OP13-100",
+    "name": "Jewelry Bonney",
+    "nameKo": "쥬얼리 보니",
+    "colors": [
+      "Yellow"
+    ],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-13"
+  },
+  {
+    "id": "OP13-001",
+    "name": "Monkey D. Luffy",
+    "nameKo": "몽키 D. 루피",
+    "colors": [
+      "Red",
+      "Green"
+    ],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-13"
   }
 ]

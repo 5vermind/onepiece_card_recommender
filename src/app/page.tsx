@@ -32,13 +32,13 @@ export default function Home() {
         />
         <FeatureItem
           icon="🃏"
-          title="18개 메타 덱 분석"
-          description="S~C 티어 덱을 분석하여 최적의 덱을 찾아드려요"
+          title="OP-13 주요 덱 분석"
+          description="주요 메타 덱과 기존 티어아웃 덱까지 함께 비교해요"
         />
         <FeatureItem
           icon="🔥"
-          title="OP-12 최신 메타"
-          description="11탄까지의 최신 카드와 메타를 반영했어요"
+          title="OP-13 최신 메타"
+          description="13탄 주요 덱과 티어 변화를 반영했어요"
         />
       </section>
     </div>

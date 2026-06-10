@@ -142,7 +142,7 @@
     "slot": 3,
     "condition": { "q1-experience": ["q1-experienced"] },
     "text": "현재 메타에서 어떤 포지션을 원하세요?",
-    "description": "OP-12 메타 환경을 기반으로 추천해 드릴게요",
+    "description": "OP-13 메타 환경을 기반으로 추천해 드릴게요",
     "options": [
       {
         "id": "q4-top",

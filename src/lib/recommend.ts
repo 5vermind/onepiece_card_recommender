@@ -78,9 +78,11 @@ export function generateMatchReasons(deck: Deck, weights: AggregatedWeights): st
 
   // Tier match
   if (deck.tier === "S") {
-    reasons.push("현재 메타에서 최상위 티어 덱이에요!");
+    reasons.push("OP-13 메타에서 최상위 티어 덱이에요!");
   } else if (deck.tier === "A") {
-    reasons.push("메타에서 안정적으로 활약하는 덱이에요!");
+    reasons.push("OP-13 메타에서 안정적으로 활약하는 덱이에요!");
+  } else if (deck.tier === "Out") {
+    reasons.push("OP-13 기준 티어 아웃이지만 취향이 맞으면 즐길 수 있는 덱이에요.");
   }
 
   // Difficulty match

@@ -4,7 +4,7 @@
 
 export type Color = "Red" | "Green" | "Blue" | "Purple" | "Black" | "Yellow";
 export type Playstyle = "aggro" | "midrange" | "control" | "combo";
-export type Tier = "S" | "A" | "B" | "C";
+export type Tier = "S" | "A" | "B" | "C" | "Out";
 export type Difficulty = "easy" | "medium" | "hard";
 export type BudgetTier = "budget" | "mid" | "expensive";
 

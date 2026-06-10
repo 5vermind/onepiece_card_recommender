@@ -17,6 +17,8 @@ const CATEGORY_MULTIPLIERS = {
   budget: 0.7,
 } as const;
 
+const TIER_OUT_SCORE_PENALTY = 8.0;
+
 /**
  * Multi-attribute normalization strength.
  * 1.0 = full normalization (dual-attr deck gets 50% per attribute)
@@ -37,7 +39,7 @@ export function aggregateWeights(
   const result: AggregatedWeights = {
     colors: { Red: 0, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
     playstyles: { aggro: 0, midrange: 0, control: 0, combo: 0 },
-    tiers: { S: 0, A: 0, B: 0, C: 0 },
+    tiers: { S: 0, A: 0, B: 0, C: 0, Out: 0 },
     difficulties: { easy: 0, medium: 0, hard: 0 },
     budgets: { budget: 0, mid: 0, expensive: 0 },
   };
@@ -111,7 +113,9 @@ export function calculateDeckScore(
     difficultyScore * CATEGORY_MULTIPLIERS.difficulty +
     budgetScore * CATEGORY_MULTIPLIERS.budget;
 
-  return base + calculateSynergyBonus(deck, answers);
+  const tierOutPenalty = deck.tier === "Out" ? TIER_OUT_SCORE_PENALTY : 0;
+
+  return base + calculateSynergyBonus(deck, answers) - tierOutPenalty;
 }
 
 interface SynergyRule {

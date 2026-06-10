@@ -72,7 +72,7 @@ function makeZeroWeights(): AggregatedWeights {
   return {
     colors: { Red: 0, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
     playstyles: { aggro: 0, midrange: 0, control: 0, combo: 0 },
-    tiers: { S: 0, A: 0, B: 0, C: 0 },
+    tiers: { S: 0, A: 0, B: 0, C: 0, Out: 0 },
     difficulties: { easy: 0, medium: 0, hard: 0 },
     budgets: { budget: 0, mid: 0, expensive: 0 },
   };

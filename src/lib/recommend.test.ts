@@ -1,6 +1,9 @@
 import { describe, it, expect } from "vitest";
+import decksData from "@/data/decks.json";
 import { recommendDecks, generateMatchReasons } from "./recommend";
 import { type AggregatedWeights } from "./types";
+
+const TOTAL_DECKS = decksData.length;
 
 function makeAggroBeginnerAnswers(): Record<string, string> {
   return {
@@ -36,9 +39,9 @@ function makeCasualMidrangeAnswers(): Record<string, string> {
 }
 
 describe("recommendDecks", () => {
-  it("should return all 27 decks in the full ranking", () => {
+  it("should return all decks in the full ranking", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
-    expect(results).toHaveLength(27);
+    expect(results).toHaveLength(TOTAL_DECKS);
   });
 
   it("should rank aggro decks highest for aggro preference", () => {
@@ -133,7 +136,7 @@ describe("recommendDecks", () => {
     const experiencedAnswers = makeControlExperiencedAnswers();
     const results = recommendDecks(experiencedAnswers);
 
-    expect(results.length).toBe(27);
+    expect(results.length).toBe(TOTAL_DECKS);
     expect(results[0].score).toBeGreaterThan(0);
   });
 });
@@ -142,7 +145,7 @@ describe("generateMatchReasons", () => {
   const ZERO_WEIGHTS: AggregatedWeights = {
     colors: { Red: 0, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
     playstyles: { aggro: 0, midrange: 0, control: 0, combo: 0 },
-    tiers: { S: 0, A: 0, B: 0, C: 0 },
+    tiers: { S: 0, A: 0, B: 0, C: 0, Out: 0 },
     difficulties: { easy: 0, medium: 0, hard: 0 },
     budgets: { budget: 0, mid: 0, expensive: 0 },
   };
@@ -219,7 +222,7 @@ describe("generateMatchReasons", () => {
       ...ZERO_WEIGHTS,
       colors: { Red: 3, Green: 0, Blue: 0, Purple: 0, Black: 0, Yellow: 0 },
       playstyles: { aggro: 3, midrange: 0, control: 0, combo: 0 },
-      tiers: { S: 0, A: 3, B: 0, C: 0 },
+      tiers: { S: 0, A: 3, B: 0, C: 0, Out: 0 },
       difficulties: { easy: 3, medium: 0, hard: 0 },
     };
     const deck = {

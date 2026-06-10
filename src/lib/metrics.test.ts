@@ -4,6 +4,7 @@ import decksData from "@/data/decks.json";
 import { type Deck, type DeckRecommendation } from "./types";
 
 const ALL_DECKS = decksData as Deck[];
+const ACTIVE_DECKS = ALL_DECKS.filter((deck) => deck.tier !== "Out");
 
 // ============================================================
 // Answer space enumeration
@@ -95,11 +96,11 @@ describe("Metrics: Answer Space", () => {
 });
 
 describe("Metrics: Deck Coverage", () => {
-  it("every deck should appear in top-3 for at least one combination", () => {
+  it("every OP-13 active deck should appear in top-3 for at least one combination", () => {
     const results = getAllResults();
     const top3Appearances = new Map<string, number>();
 
-    for (const deck of ALL_DECKS) {
+    for (const deck of ACTIVE_DECKS) {
       top3Appearances.set(deck.id, 0);
     }
 
@@ -109,7 +110,7 @@ describe("Metrics: Deck Coverage", () => {
       }
     }
 
-    const deadDecks = ALL_DECKS.filter((d) => (top3Appearances.get(d.id) ?? 0) === 0);
+    const deadDecks = ACTIVE_DECKS.filter((d) => (top3Appearances.get(d.id) ?? 0) === 0);
 
     if (deadDecks.length > 0) {
       const deadList = deadDecks.map((d) => `${d.id} (${d.nameKo})`).join(", ");
@@ -129,11 +130,11 @@ describe("Metrics: Deck Coverage", () => {
     expect(deadDecks).toHaveLength(0);
   });
 
-  it("every deck should appear in top-5 for at least one combination", () => {
+  it("every OP-13 active deck should appear in top-5 for at least one combination", () => {
     const results = getAllResults();
     const top5Appearances = new Map<string, number>();
 
-    for (const deck of ALL_DECKS) {
+    for (const deck of ACTIVE_DECKS) {
       top5Appearances.set(deck.id, 0);
     }
 
@@ -143,7 +144,7 @@ describe("Metrics: Deck Coverage", () => {
       }
     }
 
-    const deadDecks = ALL_DECKS.filter((d) => (top5Appearances.get(d.id) ?? 0) === 0);
+    const deadDecks = ACTIVE_DECKS.filter((d) => (top5Appearances.get(d.id) ?? 0) === 0);
     expect(deadDecks).toHaveLength(0);
   });
 });
@@ -153,7 +154,7 @@ describe("Metrics: Dominance Check", () => {
     const results = getAllResults();
     const top3Appearances = new Map<string, number>();
 
-    for (const deck of ALL_DECKS) {
+    for (const deck of ACTIVE_DECKS) {
       top3Appearances.set(deck.id, 0);
     }
 
@@ -163,7 +164,7 @@ describe("Metrics: Dominance Check", () => {
       }
     }
 
-    const dominantDecks = ALL_DECKS.filter(
+    const dominantDecks = ACTIVE_DECKS.filter(
       (d) => (top3Appearances.get(d.id) ?? 0) === results.length,
     );
 
@@ -179,7 +180,7 @@ describe("Metrics: Dominance Check", () => {
     const results = getAllResults();
     const top3Appearances = new Map<string, number>();
 
-    for (const deck of ALL_DECKS) {
+    for (const deck of ACTIVE_DECKS) {
       top3Appearances.set(deck.id, 0);
     }
 
@@ -190,7 +191,9 @@ describe("Metrics: Dominance Check", () => {
     }
 
     const threshold = results.length * 0.5;
-    const overRepresented = ALL_DECKS.filter((d) => (top3Appearances.get(d.id) ?? 0) > threshold);
+    const overRepresented = ACTIVE_DECKS.filter(
+      (d) => (top3Appearances.get(d.id) ?? 0) > threshold,
+    );
 
     if (overRepresented.length > 0) {
       console.warn("\n=== Over-Represented Decks (>50% top-3) ===");
@@ -211,7 +214,7 @@ describe("Metrics: Dominance Check", () => {
     const results = getAllResults();
     const avgScoreByDeck = new Map<string, number>();
 
-    for (const deck of ALL_DECKS) {
+    for (const deck of ACTIVE_DECKS) {
       avgScoreByDeck.set(deck.id, 0);
     }
 
@@ -225,8 +228,8 @@ describe("Metrics: Dominance Check", () => {
       avgScoreByDeck.set(deckId, totalScore / results.length);
     }
 
-    const multiAttrDecks = ALL_DECKS.filter((d) => d.colors.length > 1 || d.playstyle.length > 1);
-    const singleAttrDecks = ALL_DECKS.filter(
+    const multiAttrDecks = ACTIVE_DECKS.filter((d) => d.colors.length > 1 || d.playstyle.length > 1);
+    const singleAttrDecks = ACTIVE_DECKS.filter(
       (d) => d.colors.length === 1 && d.playstyle.length === 1,
     );
 

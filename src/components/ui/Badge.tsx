@@ -17,6 +17,7 @@ const tierMap: Record<string, string> = {
   A: "bg-tier-a text-white",
   B: "bg-tier-b text-gray-800",
   C: "bg-tier-c text-white",
+  Out: "bg-gray-200 text-gray-600",
 };
 
 const difficultyMap: Record<string, string> = {
@@ -54,6 +55,7 @@ function getVariantClasses(variant: BadgeProps["variant"], value: string): strin
 function getDisplayLabel(variant: BadgeProps["variant"], value: string): string {
   switch (variant) {
     case "tier":
+      if (value === "Out") return "Tier Out";
       return `Tier ${value}`;
     case "difficulty":
       return difficultyLabel[value] ?? value;

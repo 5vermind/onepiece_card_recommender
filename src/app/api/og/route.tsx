@@ -10,6 +10,7 @@ const TIER_BG: Record<string, string> = {
   A: "#ffa502",
   B: "#7bed9f",
   C: "#70a1ff",
+  Out: "#e5e7eb",
 };
 
 const TIER_FG: Record<string, string> = {
@@ -17,6 +18,7 @@ const TIER_FG: Record<string, string> = {
   A: "#ffffff",
   B: "#1a1a2e",
   C: "#ffffff",
+  Out: "#4b5563",
 };
 
 const COLOR_HEX: Record<string, string> = {
@@ -113,7 +115,7 @@ export async function GET(request: NextRequest) {
               marginLeft: "4px",
             }}
           >
-            Tier {deck.tier}
+            {deck.tier === "Out" ? "Tier Out" : `Tier ${deck.tier}`}
           </span>
         </div>
       ))}
@@ -128,7 +130,7 @@ export async function GET(request: NextRequest) {
         }}
       >
         <span>원피스 카드 게임 덱 추천</span>
-        <span>OP-12 메타 기준</span>
+        <span>OP-13 메타 기준</span>
       </div>
     </div>,
     {
