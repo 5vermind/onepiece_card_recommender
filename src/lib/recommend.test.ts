@@ -144,11 +144,24 @@ describe("recommendDecks", () => {
 });
 
 describe("meta deck data", () => {
-  it("should include EB-03 Vivi in the current Korean card pool", () => {
-    const vivi = decksData.find((deck) => deck.leaderId === "EB03-001");
+  it("should reflect the OP-14 tier revalidation for Vivi, both Luffy decks, Roger, and Sanji", () => {
+    const vivi = decksData.find((deck) => deck.id === "rb-vivi-eb03");
+    const greenPurpleLuffy = decksData.find((deck) => deck.id === "gp-luffy");
+    const redGreenLuffy = decksData.find((deck) => deck.id === "rg-luffy-op13");
+    const roger = decksData.find((deck) => deck.id === "rp-roger-op13");
+    const bluePurpleSanji = decksData.find((deck) => deck.id === "bp-sanji-op12");
 
     expect(vivi?.availability).toBe("current");
     expect(vivi?.format).toBe("OP-14");
+    expect(vivi?.tier).toBe("C");
+    expect(greenPurpleLuffy?.tier).toBe("C");
+    expect(redGreenLuffy?.tier).toBe("B");
+    expect(redGreenLuffy?.description).toContain("2.26%");
+    expect(roger?.tier).toBe("C");
+    expect(bluePurpleSanji?.tier).toBe("B");
+    expect(bluePurpleSanji?.keyCards).toEqual(
+      expect.arrayContaining(["OP12-070 Sanji", "OP12-060 Boeuf Burst"]),
+    );
   });
 
   it("should reflect the Blue Purple Luffy matchup guide", () => {
