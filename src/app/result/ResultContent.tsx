@@ -4,7 +4,7 @@ import { Suspense, useState, useMemo, useEffect, useRef } from "react";
 import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import { parseAnswersParam } from "@/lib/answer-codec";
-import { recommendDecks, recommendUpcomingDecks } from "@/lib/recommend";
+import { recommendDecks } from "@/lib/recommend";
 import { trackEvent, SCORING_VERSION } from "@/lib/analytics";
 import { DeckCard } from "@/components/DeckCard";
 import { ShareButton } from "@/components/ShareButton";
@@ -13,25 +13,20 @@ import { Button } from "@/components/ui/Button";
 function ResultInner() {
   const searchParams = useSearchParams();
   const [showAll, setShowAll] = useState(false);
-  const [showAllUpcoming, setShowAllUpcoming] = useState(false);
   const tracked = useRef(false);
 
-  const { results, upcomingResults, error } = useMemo(() => {
+  const { results, error } = useMemo(() => {
     const param = searchParams.get("a");
     if (!param) {
-      return { results: null, upcomingResults: null, error: "답변 데이터가 없습니다." };
+      return { results: null, error: "답변 데이터가 없습니다." };
     }
 
     const answers = parseAnswersParam(param);
     if (!answers) {
-      return { results: null, upcomingResults: null, error: "답변 데이터를 읽을 수 없습니다." };
+      return { results: null, error: "답변 데이터를 읽을 수 없습니다." };
     }
 
-    return {
-      results: recommendDecks(answers),
-      upcomingResults: recommendUpcomingDecks(answers),
-      error: null,
-    };
+    return { results: recommendDecks(answers), error: null };
   }, [searchParams]);
 
   useEffect(() => {
@@ -67,17 +62,13 @@ function ResultInner() {
 
   const top3 = results.slice(0, 3);
   const rest = results.slice(3);
-  const upcoming = upcomingResults ?? [];
-  const visibleUpcoming = showAllUpcoming ? upcoming : upcoming.slice(0, 3);
 
   return (
     <div className="mx-auto max-w-3xl px-4 py-8">
       <div className="mb-8 text-center">
         <div className="mb-2 text-4xl">🏴‍☠️</div>
         <h1 className="text-2xl font-extrabold text-gray-900 sm:text-3xl">당신에게 추천하는 덱</h1>
-        <p className="mt-2 text-gray-500">
-          한국 OP-13 + EB-03 현행 카드풀에서 가장 적합한 덱을 찾았어요!
-        </p>
+        <p className="mt-2 text-gray-500">한국 OP-14 카드풀에서 가장 적합한 덱을 찾았어요!</p>
       </div>
 
       <div className="space-y-4">
@@ -111,37 +102,6 @@ function ResultInner() {
             </div>
           )}
         </div>
-      )}
-
-      {visibleUpcoming.length > 0 && (
-        <section className="mt-12 border-t border-gray-200 pt-8">
-          <div className="mb-5 text-center">
-            <p className="text-sm font-semibold text-violet-600">COMING SOON</p>
-            <h2 className="mt-1 text-xl font-extrabold text-gray-900">OP-14 추천 미리보기</h2>
-            <p className="mt-2 text-sm text-gray-500">
-              해외 선행 환경을 바탕으로 고른 출시 예정 덱이에요. 한국 발매 후 평가는 달라질 수
-              있어요.
-            </p>
-          </div>
-          <div className="space-y-4">
-            {visibleUpcoming.map((recommendation, index) => (
-              <DeckCard
-                key={recommendation.deck.id}
-                recommendation={recommendation}
-                rank={index + 1}
-              />
-            ))}
-          </div>
-          {upcoming.length > 3 && (
-            <button
-              type="button"
-              onClick={() => setShowAllUpcoming((prev) => !prev)}
-              className="mt-4 w-full rounded-lg border border-violet-200 bg-violet-50 px-4 py-3 text-center text-sm font-medium text-violet-700 transition-colors hover:bg-violet-100"
-            >
-              {showAllUpcoming ? "OP-14 미리보기 접기 ▲" : "OP-14 신규 리더 7종 모두 보기 ▼"}
-            </button>
-          )}
-        </section>
       )}
 
       <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">

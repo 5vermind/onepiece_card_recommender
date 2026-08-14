@@ -97,7 +97,7 @@ describe("Metrics: Answer Space", () => {
 });
 
 describe("Metrics: Deck Coverage", () => {
-  it("every OP-13 + EB-03 active deck should appear in top-3 for at least one combination", () => {
+  it("every OP-14 active deck should appear in top-3 for at least one combination", () => {
     const results = getAllResults();
     const top3Appearances = new Map<string, number>();
 
@@ -131,7 +131,7 @@ describe("Metrics: Deck Coverage", () => {
     expect(deadDecks).toHaveLength(0);
   });
 
-  it("every OP-13 + EB-03 active deck should appear in top-5 for at least one combination", () => {
+  it("every OP-14 active deck should appear in top-5 for at least one combination", () => {
     const results = getAllResults();
     const top5Appearances = new Map<string, number>();
 

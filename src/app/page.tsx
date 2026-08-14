@@ -32,13 +32,13 @@ export default function Home() {
         />
         <FeatureItem
           icon="🃏"
-          title="EB-03 현행 덱 분석"
-          description="한국 OP-13 + EB-03 카드풀의 주요 덱을 비교해요"
+          title="OP-14 현행 덱 분석"
+          description="한국 OP-14 카드풀의 주요 덱을 한 번에 비교해요"
         />
         <FeatureItem
           icon="🔥"
-          title="OP-14 미리보기"
-          description="출시 예정 신규 리더 7종도 별도로 추천해요"
+          title="해외 실전 데이터 반영"
+          description="영문권 선행 입상 덱과 매치업을 함께 살펴봐요"
         />
       </section>
     </div>

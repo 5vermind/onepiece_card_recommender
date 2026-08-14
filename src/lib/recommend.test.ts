@@ -1,11 +1,10 @@
 import { describe, it, expect } from "vitest";
 import decksData from "@/data/decks.json";
 import leadersData from "@/data/leaders.json";
-import { recommendDecks, recommendUpcomingDecks, generateMatchReasons } from "./recommend";
+import { recommendDecks, generateMatchReasons } from "./recommend";
 import { type AggregatedWeights, type Deck } from "./types";
 
 const TOTAL_CURRENT_DECKS = decksData.filter((deck) => deck.availability === "current").length;
-const TOTAL_UPCOMING_DECKS = decksData.filter((deck) => deck.availability === "upcoming").length;
 
 function makeAggroBeginnerAnswers(): Record<string, string> {
   return {
@@ -47,13 +46,6 @@ describe("recommendDecks", () => {
     expect(results.every((result) => result.deck.availability === "current")).toBe(true);
   });
 
-  it("should keep OP-14 previews out of the current ranking", () => {
-    const upcoming = recommendUpcomingDecks(makeAggroBeginnerAnswers());
-
-    expect(upcoming).toHaveLength(TOTAL_UPCOMING_DECKS);
-    expect(upcoming.every((result) => result.deck.availability === "upcoming")).toBe(true);
-  });
-
   it("should rank aggro decks highest for aggro preference", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
     const top3 = results.slice(0, 3);
@@ -81,13 +73,13 @@ describe("recommendDecks", () => {
   it("should prioritize decks matching either of two selected colors", () => {
     const answers = {
       ...makeAggroBeginnerAnswers(),
-      "q3-color": "q3-red|q3-yellow",
+      "q3-color": "q3-red|q3-green",
     };
     const results = recommendDecks(answers);
     const top3 = results.slice(0, 3);
 
     const matchingColorCount = top3.filter(
-      (r) => r.deck.colors.includes("Red") || r.deck.colors.includes("Yellow"),
+      (r) => r.deck.colors.includes("Red") || r.deck.colors.includes("Green"),
     ).length;
     expect(matchingColorCount).toBeGreaterThanOrEqual(2);
   });
@@ -156,10 +148,10 @@ describe("meta deck data", () => {
     const vivi = decksData.find((deck) => deck.leaderId === "EB03-001");
 
     expect(vivi?.availability).toBe("current");
-    expect(vivi?.format).toBe("OP-13 + EB-03");
+    expect(vivi?.format).toBe("OP-14");
   });
 
-  it("should reflect the OP-13 + EB-03 Blue Purple Luffy matchup guide", () => {
+  it("should reflect the Blue Purple Luffy matchup guide", () => {
     const bluePurpleLuffy = decksData.find((deck) => deck.id === "bp-luffy");
 
     expect(bluePurpleLuffy?.matchups).toEqual(
@@ -173,15 +165,45 @@ describe("meta deck data", () => {
     );
   });
 
-  it("should include all seven OP-14 leaders only as upcoming previews", () => {
-    const upcomingLeaderIds = decksData
-      .filter((deck) => deck.availability === "upcoming")
+  it("should include all seven OP-14 leaders in the current ranking", () => {
+    const currentOp14LeaderIds = decksData
+      .filter((deck) => deck.availability === "current" && deck.leaderId.startsWith("OP14-"))
       .map((deck) => deck.leaderId)
       .sort();
 
-    expect(upcomingLeaderIds).toEqual(
+    expect(currentOp14LeaderIds).toEqual(
       ["OP14-001", "OP14-020", "OP14-040", "OP14-041", "OP14-060", "OP14-079", "OP14-080"].sort(),
     );
+  });
+
+  it("should treat the OP-14 card pool as current without a preview group", () => {
+    expect(decksData.every((deck) => deck.availability === "current")).toBe(true);
+    expect(decksData.every((deck) => deck.format === "OP-14")).toBe(true);
+  });
+
+  it("should include the returning Red Green Law in the OP-14 ranking", () => {
+    const redGreenLaw = decksData.find((deck) => deck.id === "rg-law-op14");
+
+    expect(redGreenLaw?.leaderId).toBe("OP01-002");
+    expect(redGreenLaw?.availability).toBe("current");
+    expect(redGreenLaw?.format).toBe("OP-14");
+    expect(redGreenLaw?.keyCards).toEqual(
+      expect.arrayContaining(["OP14-013 Monkey.D.Luffy", "OP14-016 X.Drake"]),
+    );
+  });
+
+  it("should exclude decks removed from the OP-14 recommendation pool", () => {
+    const removedDeckIds = [
+      "ry-betty",
+      "r-zoro",
+      "y-bonney-op13",
+      "r-rayleigh",
+      "gb-zoro-sanji",
+      "gp-lim",
+      "py-pudding",
+    ];
+
+    expect(decksData.filter((deck) => removedDeckIds.includes(deck.id))).toEqual([]);
   });
 
   it("should provide leaders and practical details for every recommendable deck", () => {

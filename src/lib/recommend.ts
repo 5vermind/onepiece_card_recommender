@@ -22,13 +22,6 @@ export function recommendDecks(answers: Record<string, string>): DeckRecommendat
   );
 }
 
-export function recommendUpcomingDecks(answers: Record<string, string>): DeckRecommendation[] {
-  return scoreDecks(
-    answers,
-    decks.filter((deck) => deck.availability === "upcoming"),
-  );
-}
-
 function scoreDecks(answers: Record<string, string>, candidates: Deck[]): DeckRecommendation[] {
   const questions = resolveQuestions(answers);
   const weights = aggregateWeights(answers, questions);
@@ -89,18 +82,10 @@ export function generateMatchReasons(deck: Deck, weights: AggregatedWeights): st
   }
 
   // Tier match
-  if (deck.availability === "upcoming") {
-    if (deck.tier === "S") {
-      reasons.push("해외 OP-14 선행 환경에서 최상위권으로 검증된 출시 예정 덱이에요!");
-    } else if (deck.tier === "A") {
-      reasons.push("해외 OP-14 선행 환경에서 경쟁력을 보인 출시 예정 덱이에요!");
-    } else {
-      reasons.push("OP-14 출시 후 연구할 가치가 있는 미리보기 덱이에요!");
-    }
-  } else if (deck.tier === "S") {
-    reasons.push("OP-13 + EB-03 현행 메타에서 최상위 티어 덱이에요!");
+  if (deck.tier === "S") {
+    reasons.push("OP-14 메타에서 최상위 티어 덱이에요!");
   } else if (deck.tier === "A") {
-    reasons.push("OP-13 + EB-03 현행 메타에서 안정적으로 활약하는 덱이에요!");
+    reasons.push("OP-14 메타에서 안정적으로 활약하는 덱이에요!");
   } else if (deck.tier === "Out") {
     reasons.push("현행 메타 기준 티어 아웃이지만 취향이 맞으면 즐길 수 있는 덱이에요.");
   }
