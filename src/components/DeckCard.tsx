@@ -87,6 +87,11 @@ export function DeckCard({ recommendation, rank }: DeckCardProps) {
       </div>
 
       <div className="mb-3 flex flex-wrap gap-1.5">
+        {deck.availability === "upcoming" && (
+          <span className="inline-flex items-center rounded-full bg-violet-100 px-2.5 py-0.5 text-xs font-medium text-violet-800">
+            OP-14 출시 예정
+          </span>
+        )}
         {deck.colors.map((color) => (
           <Badge key={color} variant="color" value={color} />
         ))}

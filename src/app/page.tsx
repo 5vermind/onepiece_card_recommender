@@ -12,7 +12,7 @@ export default function Home() {
           <span className="text-op-red">원피스 카드 게임 덱</span>은?
         </h1>
         <p className="mt-4 text-lg text-gray-600">
-          5개 질문에 답하면 당신에게 딱 맞는 덱을 추천해 드려요!
+          6개 질문에 답하면 당신에게 딱 맞는 덱을 추천해 드려요!
         </p>
 
         <Link
@@ -27,18 +27,18 @@ export default function Home() {
       <section className="mx-auto mt-16 grid max-w-2xl grid-cols-1 gap-6 sm:grid-cols-3">
         <FeatureItem
           icon="❓"
-          title="5가지 간단한 질문"
+          title="6가지 간단한 질문"
           description="플레이 스타일, 선호 색상 등 간단한 질문에 답해 주세요"
         />
         <FeatureItem
           icon="🃏"
-          title="OP-13 주요 덱 분석"
-          description="주요 메타 덱과 기존 티어아웃 덱까지 함께 비교해요"
+          title="EB-03 현행 덱 분석"
+          description="한국 OP-13 + EB-03 카드풀의 주요 덱을 비교해요"
         />
         <FeatureItem
           icon="🔥"
-          title="OP-13 최신 메타"
-          description="13탄 주요 덱과 티어 변화를 반영했어요"
+          title="OP-14 미리보기"
+          description="출시 예정 신규 리더 7종도 별도로 추천해요"
         />
       </section>
     </div>

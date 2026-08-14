@@ -1,9 +1,11 @@
 import { describe, it, expect } from "vitest";
 import decksData from "@/data/decks.json";
-import { recommendDecks, generateMatchReasons } from "./recommend";
-import { type AggregatedWeights } from "./types";
+import leadersData from "@/data/leaders.json";
+import { recommendDecks, recommendUpcomingDecks, generateMatchReasons } from "./recommend";
+import { type AggregatedWeights, type Deck } from "./types";
 
-const TOTAL_DECKS = decksData.length;
+const TOTAL_CURRENT_DECKS = decksData.filter((deck) => deck.availability === "current").length;
+const TOTAL_UPCOMING_DECKS = decksData.filter((deck) => deck.availability === "upcoming").length;
 
 function makeAggroBeginnerAnswers(): Record<string, string> {
   return {
@@ -41,7 +43,15 @@ function makeCasualMidrangeAnswers(): Record<string, string> {
 describe("recommendDecks", () => {
   it("should return all decks in the full ranking", () => {
     const results = recommendDecks(makeAggroBeginnerAnswers());
-    expect(results).toHaveLength(TOTAL_DECKS);
+    expect(results).toHaveLength(TOTAL_CURRENT_DECKS);
+    expect(results.every((result) => result.deck.availability === "current")).toBe(true);
+  });
+
+  it("should keep OP-14 previews out of the current ranking", () => {
+    const upcoming = recommendUpcomingDecks(makeAggroBeginnerAnswers());
+
+    expect(upcoming).toHaveLength(TOTAL_UPCOMING_DECKS);
+    expect(upcoming.every((result) => result.deck.availability === "upcoming")).toBe(true);
   });
 
   it("should rank aggro decks highest for aggro preference", () => {
@@ -136,8 +146,53 @@ describe("recommendDecks", () => {
     const experiencedAnswers = makeControlExperiencedAnswers();
     const results = recommendDecks(experiencedAnswers);
 
-    expect(results.length).toBe(TOTAL_DECKS);
+    expect(results.length).toBe(TOTAL_CURRENT_DECKS);
     expect(results[0].score).toBeGreaterThan(0);
+  });
+});
+
+describe("meta deck data", () => {
+  it("should include EB-03 Vivi in the current Korean card pool", () => {
+    const vivi = decksData.find((deck) => deck.leaderId === "EB03-001");
+
+    expect(vivi?.availability).toBe("current");
+    expect(vivi?.format).toBe("OP-13 + EB-03");
+  });
+
+  it("should reflect the OP-13 + EB-03 Blue Purple Luffy matchup guide", () => {
+    const bluePurpleLuffy = decksData.find((deck) => deck.id === "bp-luffy");
+
+    expect(bluePurpleLuffy?.matchups).toEqual(
+      expect.arrayContaining([
+        expect.stringMatching(/^\[미세 불리\] 흑 이무/),
+        expect.stringMatching(/^\[유리\] 적흑 사보/),
+        expect.stringMatching(/^\[미세 유리\] 녹 조로/),
+        expect.stringMatching(/^\[불리\] 적자 로저/),
+        expect.stringMatching(/^\[매우 불리\] 녹 보니/),
+      ]),
+    );
+  });
+
+  it("should include all seven OP-14 leaders only as upcoming previews", () => {
+    const upcomingLeaderIds = decksData
+      .filter((deck) => deck.availability === "upcoming")
+      .map((deck) => deck.leaderId)
+      .sort();
+
+    expect(upcomingLeaderIds).toEqual(
+      ["OP14-001", "OP14-020", "OP14-040", "OP14-041", "OP14-060", "OP14-079", "OP14-080"].sort(),
+    );
+  });
+
+  it("should provide leaders and practical details for every recommendable deck", () => {
+    const leaderIds = new Set(leadersData.map((leader) => leader.id));
+    const recommendableDecks = (decksData as Deck[]).filter((deck) => deck.tier !== "Out");
+
+    for (const deck of recommendableDecks) {
+      expect(leaderIds.has(deck.leaderId), deck.id).toBe(true);
+      expect(deck.keyCards.length, deck.id).toBeGreaterThanOrEqual(3);
+      expect(deck.playTips.length, deck.id).toBeGreaterThanOrEqual(2);
+    }
   });
 });
 
@@ -157,6 +212,8 @@ describe("generateMatchReasons", () => {
     leaderId: "OP01-001",
     budgetTier: "budget" as const,
     keyMechanic: "테스트",
+    availability: "current" as const,
+    format: "테스트 포맷",
     description: "테스트",
     strengths: ["강점"],
     weaknesses: ["약점"],

@@ -392,5 +392,108 @@
     "life": 4,
     "power": 5000,
     "set": "OP-13"
+  },
+  {
+    "id": "EB03-001",
+    "name": "Nefeltari Vivi",
+    "nameKo": "네펠타리 비비",
+    "colors": [
+      "Red",
+      "Blue"
+    ],
+    "life": 4,
+    "power": 5000,
+    "set": "EB-03"
+  },
+  {
+    "id": "OP08-058",
+    "name": "Charlotte Pudding",
+    "nameKo": "샬롯 푸딩",
+    "colors": [
+      "Purple",
+      "Yellow"
+    ],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-08"
+  },
+  {
+    "id": "OP14-001",
+    "name": "Trafalgar Law",
+    "nameKo": "트라팔가 로",
+    "colors": [
+      "Red"
+    ],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-14"
+  },
+  {
+    "id": "OP14-020",
+    "name": "Dracule Mihawk",
+    "nameKo": "쥬라큘 미호크",
+    "colors": [
+      "Green"
+    ],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-14"
+  },
+  {
+    "id": "OP14-040",
+    "name": "Jinbe",
+    "nameKo": "징베",
+    "colors": [
+      "Blue"
+    ],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-14"
+  },
+  {
+    "id": "OP14-041",
+    "name": "Boa Hancock",
+    "nameKo": "보아 행콕",
+    "colors": [
+      "Blue",
+      "Yellow"
+    ],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-14"
+  },
+  {
+    "id": "OP14-060",
+    "name": "Donquixote Doflamingo",
+    "nameKo": "돈키호테 도플라밍고",
+    "colors": [
+      "Purple"
+    ],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-14"
+  },
+  {
+    "id": "OP14-079",
+    "name": "Crocodile",
+    "nameKo": "크로커다일",
+    "colors": [
+      "Black"
+    ],
+    "life": 5,
+    "power": 5000,
+    "set": "OP-14"
+  },
+  {
+    "id": "OP14-080",
+    "name": "Gecko Moria",
+    "nameKo": "겟코 모리아",
+    "colors": [
+      "Black",
+      "Yellow"
+    ],
+    "life": 4,
+    "power": 5000,
+    "set": "OP-14"
   }
 ]

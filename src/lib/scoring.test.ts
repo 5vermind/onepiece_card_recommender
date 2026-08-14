@@ -90,6 +90,8 @@ const baseDeck: Deck = {
   tier: "A",
   difficulty: "easy",
   budgetTier: "budget",
+  availability: "current",
+  format: "테스트 포맷",
   keyMechanic: "테스트",
   description: "테스트 덱입니다",
   strengths: ["강점1"],

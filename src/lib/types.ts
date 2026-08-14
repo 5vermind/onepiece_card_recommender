@@ -7,6 +7,7 @@ export type Playstyle = "aggro" | "midrange" | "control" | "combo";
 export type Tier = "S" | "A" | "B" | "C" | "Out";
 export type Difficulty = "easy" | "medium" | "hard";
 export type BudgetTier = "budget" | "mid" | "expensive";
+export type DeckAvailability = "current" | "upcoming";
 
 // ============================================================
 // Domain Entities
@@ -32,6 +33,8 @@ export interface Deck {
   tier: Tier;
   difficulty: Difficulty;
   budgetTier: BudgetTier;
+  availability: DeckAvailability;
+  format: string;
   keyMechanic: string;
   description: string;
   strengths: string[];

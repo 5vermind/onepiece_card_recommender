@@ -4,7 +4,8 @@ import decksData from "@/data/decks.json";
 import { type Deck, type DeckRecommendation } from "./types";
 
 const ALL_DECKS = decksData as Deck[];
-const ACTIVE_DECKS = ALL_DECKS.filter((deck) => deck.tier !== "Out");
+const CURRENT_DECKS = ALL_DECKS.filter((deck) => deck.availability === "current");
+const ACTIVE_DECKS = CURRENT_DECKS.filter((deck) => deck.tier !== "Out");
 
 // ============================================================
 // Answer space enumeration
@@ -96,7 +97,7 @@ describe("Metrics: Answer Space", () => {
 });
 
 describe("Metrics: Deck Coverage", () => {
-  it("every OP-13 active deck should appear in top-3 for at least one combination", () => {
+  it("every OP-13 + EB-03 active deck should appear in top-3 for at least one combination", () => {
     const results = getAllResults();
     const top3Appearances = new Map<string, number>();
 
@@ -130,7 +131,7 @@ describe("Metrics: Deck Coverage", () => {
     expect(deadDecks).toHaveLength(0);
   });
 
-  it("every OP-13 active deck should appear in top-5 for at least one combination", () => {
+  it("every OP-13 + EB-03 active deck should appear in top-5 for at least one combination", () => {
     const results = getAllResults();
     const top5Appearances = new Map<string, number>();
 
@@ -228,7 +229,9 @@ describe("Metrics: Dominance Check", () => {
       avgScoreByDeck.set(deckId, totalScore / results.length);
     }
 
-    const multiAttrDecks = ACTIVE_DECKS.filter((d) => d.colors.length > 1 || d.playstyle.length > 1);
+    const multiAttrDecks = ACTIVE_DECKS.filter(
+      (d) => d.colors.length > 1 || d.playstyle.length > 1,
+    );
     const singleAttrDecks = ACTIVE_DECKS.filter(
       (d) => d.colors.length === 1 && d.playstyle.length === 1,
     );
@@ -514,7 +517,7 @@ describe("Metrics: Weighted Deck Coverage (Umami)", () => {
     const totalWeight = results.reduce((sum, r) => sum + r.weight, 0);
     const weightedTop3 = new Map<string, number>();
 
-    for (const deck of ALL_DECKS) {
+    for (const deck of CURRENT_DECKS) {
       weightedTop3.set(deck.id, 0);
     }
 
@@ -535,14 +538,16 @@ describe("Metrics: Weighted Deck Coverage (Umami)", () => {
       );
     }
 
-    const deadDecks = ALL_DECKS.filter((d) => (weightedTop3.get(d.id) ?? 0) / totalWeight < 0.005);
+    const deadDecks = CURRENT_DECKS.filter(
+      (d) => (weightedTop3.get(d.id) ?? 0) / totalWeight < 0.005,
+    );
     if (deadDecks.length > 0) {
       console.warn(
         `\n  [Warning] Decks below 0.5% weighted traffic: ${deadDecks.map((d) => d.nameKo).join(", ")}`,
       );
     }
 
-    const overRepresented = ALL_DECKS.filter(
+    const overRepresented = CURRENT_DECKS.filter(
       (d) => (weightedTop3.get(d.id) ?? 0) / totalWeight > 0.6,
     );
     expect(overRepresented).toHaveLength(0);
@@ -553,7 +558,7 @@ describe("Metrics: Weighted Deck Coverage (Umami)", () => {
     const totalWeight = results.reduce((sum, r) => sum + r.weight, 0);
     const weightedTop1 = new Map<string, number>();
 
-    for (const deck of ALL_DECKS) {
+    for (const deck of CURRENT_DECKS) {
       weightedTop1.set(deck.id, 0);
     }
 
@@ -586,7 +591,7 @@ describe("Metrics: Weighted vs Uniform Comparison", () => {
     const totalRealWeight = realResults.reduce((sum, r) => sum + r.weight, 0);
 
     const uniformTop3 = new Map<string, number>();
-    for (const deck of ALL_DECKS) uniformTop3.set(deck.id, 0);
+    for (const deck of CURRENT_DECKS) uniformTop3.set(deck.id, 0);
     for (const { results: recs } of uniformResults) {
       for (const rec of recs.slice(0, 3)) {
         uniformTop3.set(rec.deck.id, (uniformTop3.get(rec.deck.id) ?? 0) + 1);
@@ -594,7 +599,7 @@ describe("Metrics: Weighted vs Uniform Comparison", () => {
     }
 
     const weightedTop3 = new Map<string, number>();
-    for (const deck of ALL_DECKS) weightedTop3.set(deck.id, 0);
+    for (const deck of CURRENT_DECKS) weightedTop3.set(deck.id, 0);
     for (const { results: recs, weight } of realResults) {
       for (const rec of recs.slice(0, 3)) {
         weightedTop3.set(rec.deck.id, (weightedTop3.get(rec.deck.id) ?? 0) + weight);
@@ -605,7 +610,7 @@ describe("Metrics: Weighted vs Uniform Comparison", () => {
     console.log("  Deck                  | Uniform  | Weighted | Delta");
     console.log("  " + "-".repeat(60));
 
-    const allDecksSorted = [...ALL_DECKS].sort((a, b) => {
+    const allDecksSorted = [...CURRENT_DECKS].sort((a, b) => {
       const wA = (weightedTop3.get(a.id) ?? 0) / totalRealWeight;
       const wB = (weightedTop3.get(b.id) ?? 0) / totalRealWeight;
       return wB - wA;
