@@ -144,12 +144,14 @@ describe("recommendDecks", () => {
 });
 
 describe("meta deck data", () => {
-  it("should reflect the OP-14 tier revalidation for Vivi, both Luffy decks, Roger, and Sanji", () => {
+  it("should reflect the OP-14 tier revalidation for Vivi, both Luffy decks, Roger, Sanji, Zoro, and Bonney", () => {
     const vivi = decksData.find((deck) => deck.id === "rb-vivi-eb03");
     const greenPurpleLuffy = decksData.find((deck) => deck.id === "gp-luffy");
     const redGreenLuffy = decksData.find((deck) => deck.id === "rg-luffy-op13");
     const roger = decksData.find((deck) => deck.id === "rp-roger-op13");
     const bluePurpleSanji = decksData.find((deck) => deck.id === "bp-sanji-op12");
+    const greenZoro = decksData.find((deck) => deck.id === "g-zoro");
+    const greenBonney = decksData.find((deck) => deck.id === "g-bonney");
 
     expect(vivi?.availability).toBe("current");
     expect(vivi?.format).toBe("OP-14");
@@ -162,6 +164,17 @@ describe("meta deck data", () => {
     expect(bluePurpleSanji?.keyCards).toEqual(
       expect.arrayContaining(["OP12-070 Sanji", "OP12-060 Boeuf Burst"]),
     );
+    expect(greenZoro?.tier).toBe("B");
+    expect(greenZoro?.keyCards).toEqual(
+      expect.arrayContaining([
+        "OP12-031 Tashigi",
+        "OP13-037 Roronoa Zoro",
+        "OP13-031 Trafalgar Law",
+      ]),
+    );
+    expect(greenBonney?.tier).toBe("A");
+    expect(greenBonney?.description).toContain("1.55%");
+    expect(greenBonney?.keyCards).toContain("OP14-033 Perona");
   });
 
   it("should reflect the Blue Purple Luffy matchup guide", () => {

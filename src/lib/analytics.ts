@@ -14,7 +14,7 @@ declare global {
   }
 }
 
-export const SCORING_VERSION = "v1.6";
+export const SCORING_VERSION = "v1.7";
 
 type AnalyticsEvent =
   | { name: "quiz_started" }

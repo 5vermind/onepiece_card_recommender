@@ -24,11 +24,11 @@ OP-14 신규·복귀 덱을 하나의 현행 추천 순위에서 비교하며, �
 | 티어 | 덱                                                                 |
 | ---- | ------------------------------------------------------------------ |
 | S    | 흑 이무, 적청 에이스, 녹 미호크, 청황 보아 행콕                    |
-| A    | 청자 루피, 청황 나미, 녹 조로, 적흑 사보, 청 징베, 자 도플라밍고   |
-| B    | 녹 보니, 적녹 루피, 적녹 로, 청자 상디, 흑 크로커다일, 흑황 모리아 |
+| A    | 청자 루피, 청황 나미, 녹 보니, 적흑 사보, 청 징베, 자 도플라밍고   |
+| B    | 녹 조로, 적녹 루피, 적녹 로, 청자 상디, 흑 크로커다일, 흑황 모리아 |
 | C    | 흑 티치, 적 로, 녹자 루피, 적청 비비, 적자 로저                    |
 
-### 2. 비비·녹자 루피·적녹 루피·로저·청자 상디의 OP-14 티어를 다시 검증했습니다
+### 2. 비비·두 루피·로저·청자 상디·녹 조로·녹 보니의 OP-14 티어를 다시 검증했습니다
 
 EB-04가 포함된 OP-14.5 성적은 배제하고 영문권 `OP14` 포맷과 일본 순수 OP-14 대회만
 비교했습니다.
@@ -42,8 +42,14 @@ EB-04가 포함된 OP-14.5 성적은 배제하고 영문권 `OP14` 포맷과 일
 - **청자 상디: Out → B** — 약 1%의 사용률로 일본 도쿄 제2 에리어 47위를 완주하고
   플래그십 우승도 기록했으며, 당시 일본 메타 예상에서 Tier2로 분류됐습니다. 영미권
   OP-14 공개 입상과 충분한 표본은 없어 A가 아닌 숙련자용 다크호스로 평가했습니다.
+- **녹 조로: A → B** — 일본 도쿄 제1 에리어 7승 2패·29위와 순수 OP-14 플래그십
+  우승 기록은 있지만 후기 East 평가는 Tier3이며 영미권 OP-14 공개 입상은 없습니다.
+  참격 리더를 상대로 6000이 되는 녹 미호크의 등장까지 반영해 B티어로 조정했습니다.
+- **녹 보니: B → A** — 영문권 OP-14에서 26포인트·1.55%로 10위이며, 1,000명 규모
+  라스베이거스 챔피언십 파이널 14위와 후기 East Tier2 평가를 확인했습니다. 일본 순수
+  OP-14 표본에서도 미호크 7승 1패·행콕 3승 무패였지만 이무에는 0승 5패였습니다.
 
-다섯 덱의 설명·핵심 카드·매치업 표본 주의 문구도 같은 기준으로 갱신했습니다.
+일곱 덱의 설명·핵심 카드·매치업 표본 주의 문구도 같은 기준으로 갱신했습니다.
 
 ### 3. 적녹 로의 OP-14 복귀를 반영했습니다
 
@@ -132,11 +138,20 @@ pnpm build
 - [Limitless — 적자 로저 대회 성적](https://onepiece.limitlesstcg.com/decks/81)
 - [Limitless — 적청 비비 대회 성적](https://onepiece.limitlesstcg.com/decks/97/results)
 - [Limitless — 청자 상디 대회 성적](https://onepiece.limitlesstcg.com/decks/73/results)
+- [Limitless — 녹 조로 대회 성적](https://onepiece.limitlesstcg.com/decks/70/results)
+- [Limitless — 녹 보니 대회 성적](https://onepiece.limitlesstcg.com/decks/40/results)
+- [Limitless — 라스베이거스 챔피언십 파이널 결과](https://onepiece.limitlesstcg.com/tournaments/373)
 - [Limitless — Bonn 5위 적녹 로 덱리스트](https://onepiece.limitlesstcg.com/decks/list/6144)
 - [일본 OP-14 도쿄 제2 에리어 47위 청자 상디 공략](https://note.com/one_piece_jin/n/n3912552df170)
 - [일본 OP-14 결승대회 준우승자의 당시 메타 예상](https://note.com/matsu_tcg/n/n09c44bc0ed46)
 - [일본 순수 OP-14 플래그십 우승 청자 상디](https://note.com/super_kid/n/n4667928369c9)
 - [공식 청자 상디 추천 덱 가이드](https://www.onepiece-cardgame.com/feature/deck/deck_074.php)
+- [일본 OP-14 도쿄 제1 에리어 7승 2패 녹 조로 공략](https://note.com/taku8_card/n/nb0d1ee012e27)
+- [OP-14 East 메타 티어 및 녹 조로 평가](https://onepiece.gg/one-piece-card-game-meta-tier-list-best-decks-east-op14/)
+- [공식 녹 조로 추천 덱 가이드](https://en.onepiece-cardgame.com/feature/deck/deck_074.php)
+- [일본 녹 조로 포맷별 입상 기록](https://opmetagame.com/decks/leader/green-roronoa-zoro/)
+- [일본 순수 OP-14 녹 보니 공략 및 공개 전적](https://note.com/tai_yama/n/n482232db49dc)
+- [공식 OP14-033 페로나 카드 정보](https://www.onepiece-cardgame.com/cardlist/?freewords=OP14-033)
 - [일본 13.5탄 청자 루피 대회 결산](https://note.com/duelmonsters/n/n00d7b6d881d2)
 - [OP-13 East 메타 및 주요 매치업](https://onepiece.gg/one-piece-card-game-meta-tier-list-east-op13/)
 - [EB-03 청황 나미 가이드](https://onepiece.gg/blue-yellow-nami-guide-best-decks-strategy-eb03/)
